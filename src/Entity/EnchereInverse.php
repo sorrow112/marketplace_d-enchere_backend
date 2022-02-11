@@ -8,6 +8,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\EnchereInverseRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: EnchereInverseRepository::class)]
 #[ApiResource(
@@ -31,31 +32,37 @@ class EnchereInverse
 
     #[ORM\Column(type: 'integer')]
     #[Groups(['read:enchereInverse:collection','write:enchereInverse'])]
+    #[Assert\Positive]
     private $quantity;
 
     #[ORM\Column(type: 'float')]
     #[Groups(['read:enchereInverse:item','write:enchereInverse'])]
+    #[Assert\Positive]
     private $init_price;
 
     #[ORM\Column(type: 'float')]
     #[Groups(['read:enchereInverse:collection','write:enchereInverse'])]
+    #[Assert\Positive]
     private $immediate_price;
 
     #[ORM\Column(type: 'float')]
     #[Groups(['read:enchereInverse:collection','write:enchereInverse','read:surveille:collection'])]
+    #[Assert\Positive]
     private $current_price;
 
     #[ORM\Column(type: 'datetime')]
     #[Groups(['read:enchereInverse:collection', 'write:enchereInverse'])]
+    #[Assert\GreaterThan('today')]
     private $start_date;
 
     #[ORM\Column(type: 'datetime')]
     #[Groups(['read:enchereInverse:collection', 'write:enchereInverse'])]
+    #[Assert\GreaterThan('today')]
     private $end_date;
 
     #[ORM\OneToOne(targetEntity: Article::class, cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
-    // #[Groups(['read:enchereInverse:collection', 'read:surveille:collection', 'read:fermeture:collection'])]
+    #[Groups(['read:enchereInverse:collection', 'read:surveille:collection', 'read:fermeture:collection'])]
     private $article;
 
     #[ORM\OneToMany(mappedBy: 'enchereInverse', targetEntity: Surveille::class)]

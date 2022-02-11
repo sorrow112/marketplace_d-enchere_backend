@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Repository\DemandeDevisRepository;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: DemandeDevisRepository::class)]
 #[ApiResource(
@@ -33,6 +34,7 @@ class DemandeDevis
 
     #[ORM\Column(type: 'integer')]
     #[Groups(['write:demandeDevis', 'read:demandeDevis:collection'])]
+    #[Assert\Positive]
     private $quantity;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'demandeDevisTransmis')]

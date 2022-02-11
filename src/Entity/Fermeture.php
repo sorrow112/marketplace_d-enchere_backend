@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Repository\FermetureRepository;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: FermetureRepository::class)]
 #[ApiResource(
@@ -36,6 +37,7 @@ class Fermeture
 
     #[ORM\Column(type: 'float')]
     #[Groups(['read:fermeture:collection', 'write:fermeture'])]
+    #[Assert\Positive]
     private $finalPrice;
 
     #[ORM\OneToOne(mappedBy: 'fermeture', targetEntity: Enchere::class, cascade: ['persist', 'remove'])]

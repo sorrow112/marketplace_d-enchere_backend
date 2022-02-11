@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ReductionRepository;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ReductionRepository::class)]
 #[ApiResource(
@@ -27,6 +28,7 @@ class Reduction
 
     #[ORM\Column(type: 'float')]
     #[Groups(['write:reduction', 'read:reduction:collection'])]
+    #[Assert\Positive]
     private $value;
 
     #[ORM\Column(type: 'datetime')]

@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Repository\TransactionRepository;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TransactionRepository::class)]
 #[ApiResource(
@@ -37,6 +38,7 @@ class Transaction
 
     #[ORM\Column(type: 'float')]
     #[Groups(['read:transaction:collection','write:transaction'])]
+    #[Assert\Positive]
     private $montant;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'Payed')]

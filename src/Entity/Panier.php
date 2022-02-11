@@ -44,6 +44,7 @@ class Panier
     public function __construct()
     {
         $this->ventes = new ArrayCollection();
+        $this->date = new \DateTime();
     }
 
     public function getId(): ?int

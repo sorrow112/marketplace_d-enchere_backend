@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: EnchereRepository::class)]
 #[ApiResource(
@@ -31,26 +32,32 @@ class Enchere
 
     #[ORM\Column(type: 'integer')]
     #[Groups(['read:enchere:collection', 'write:enchere'])]
+    #[Assert\Positive]
     private $quantity;
 
     #[ORM\Column(type: 'float')]
     #[Groups(['read:enchere:item', 'write:enchere'])]
+    #[Assert\Positive]
     private $init_price;
 
     #[ORM\Column(type: 'float')]
     #[Groups(['read:enchere:collection', 'write:enchere'])]
+    #[Assert\Positive]
     private $immediate_price;
 
     #[ORM\Column(type: 'float')]
     #[Groups(['read:enchere:collection', 'read:surveille:collection', 'write:enchere'])]
+    #[Assert\Positive]
     private $current_price;
 
     #[ORM\Column(type: 'datetime')]
     #[Groups(['read:enchere:collection', 'write:enchere'])]
+    #[Assert\GreaterThan('today')]
     private $start_date;
 
     #[ORM\Column(type: 'datetime')]
     #[Groups(['read:enchere:collection', 'write:enchere'])]
+    #[Assert\GreaterThan('today')]
     private $end_date;
 
     #[ORM\OneToMany(mappedBy: 'enchere', targetEntity: Surveille::class)]

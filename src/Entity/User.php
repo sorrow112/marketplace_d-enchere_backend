@@ -2,14 +2,16 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiResource;
-use App\Repository\UserRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
+use App\Repository\UserRepository;
+use Doctrine\Common\Collections\Collection;
+use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Mime\Message;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ApiResource(
@@ -32,14 +34,31 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'string', length: 255)]
     #[Groups(['write:user', 'read:user:item'])]
+    #[Assert\Regex(
+        pattern: "/^[a-zA-Z ,.'-]{2,5}+$/i",
+        message: "le nom ne doit pas contenir des characteres speciaux et ça doit etre entre 2 et 5 mots"
+    )]
     private $name;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'string', length: 20)]
     #[Groups(['read:vente:collection', 'write:user', 'read:user:collection', 'read:transaction:item', 'read:fermeture:collection'])]
+    #[Assert\Length(
+        min: 5,
+        max: 15,
+        minMessage: "le nom d'utlisateur saisit est très court",
+        maxMessage: "le nom d'utlisateur saisit est très long",
+    )]
+    #[Assert\Regex(
+        pattern: "/^[a-zA-Z ,.'-]{,1}+$/i",
+        message: "le nom d'utilisateur ne doit pas contenir des characteres speciaux"
+    )]
     private $userName;
 
     #[ORM\Column(type: 'string', length: 180, unique: true)]
     #[Groups(['write:user', 'read:user:collection'])]
+    #[Assert\Email(
+        message: "l'email :{{ value }} n'est pas un email valide.",
+    )]
     private $email;
 
    
@@ -49,6 +68,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'string', length: 255)]
     #[Groups(['write:user', 'read:user:item'])]
+    #[Assert\Length(
+        min: 8,
+        max: 8,
+        minMessage: 'un numero de telephone a 8 chiffres',
+        maxMessage: 'un numero de telephone a 8 chiffres',
+    )]
+    #[Assert\Regex(
+        pattern: "/^[0-9]{,1}+$/i",
+        message: "votre numero de telephone doit contenir uniquement des chiffres"
+    )]
     private $telephone;
 
     #[ORM\Column(type: 'string', length: 255)]
@@ -117,6 +146,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->commandes = new ArrayCollection();
         $this->Payed = new ArrayCollection();
         $this->GotPayed = new ArrayCollection();
+        $this->isActive = true;
     }
 
     public function getId(): ?int

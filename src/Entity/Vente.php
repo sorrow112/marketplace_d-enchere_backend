@@ -6,6 +6,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\VenteRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: VenteRepository::class)]
 #[ApiResource(
@@ -30,10 +31,12 @@ class Vente
 
     #[ORM\Column(type: 'integer')]
     #[Groups(['read:vente:collection', 'write:vente'])]
+    #[Assert\GreaterThan(0)]
     private $quantity;
 
     #[ORM\Column(type: 'float')]
     #[Groups(['read:vente:collection', 'write:vente', 'read:panier:collection'])]
+    #[Assert\Positive]
     private $price;
 
     #[ORM\OneToOne(inversedBy: 'vente', targetEntity: Article::class, cascade: ['persist', 'remove'])]

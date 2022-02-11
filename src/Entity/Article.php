@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ArticleRepository::class)]
 #[ApiResource(
@@ -33,11 +34,18 @@ class Article
     #[ORM\Column(type: 'string', length: 255)]
     #[Groups(['read:vente:collection', 'read:enchere:collection', 'read:enchereInverse:collection', 'read:surveille:collection', 'read:panier:collection'
     , 'read:fermeture:collection','write:article'])]
+    #[Assert\Length(
+        min: 3,
+        max: 15,
+        maxMessage: 'le nom de marque est trop long',
+        minMessage: 'le nom de marque est trop court'
+    )]
     private $name;
 
 
     #[ORM\Column(type: 'string', length: 255)]
     #[Groups(['read:vente:item', 'read:enchere:item', 'read:enchereInverse:item','write:article'])]
+    #[Assert\Choice(['neuf', 'utilisé'])]
     private $state;
 
 
@@ -48,10 +56,15 @@ class Article
 
     #[ORM\Column(type: 'datetime')]
     #[Groups(['read:vente:item', 'read:enchere:item', 'read:enchereInverse:item','write:article'])]
+    #[Assert\LessThan('today')]
     private $fabrication_date;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     #[Groups(['read:vente:item', 'read:enchere:item', 'read:enchereInverse:item','write:article'])]
+    #[Assert\Length(
+        max: 15,
+        maxMessage: 'le nom de marque est trop long',
+    )]
     private $brand;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]

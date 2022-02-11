@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Repository\AdresseRepository;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: AdresseRepository::class)]
 #[ApiResource(
@@ -40,6 +41,11 @@ class Adresse
     
     #[ORM\Column(type: 'string', length: 255)]
     #[Groups(['read:user:item', 'write:article'])]
+    #[Assert\Regex(
+        pattern: "^\d{5}(?:[-\s]\d{4})?$",
+        message: "zipcode invalide"
+    )]
+    
     private $zipcode;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'adresse')]
