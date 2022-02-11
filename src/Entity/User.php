@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Mime\Message;
+
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -17,6 +17,7 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 #[ApiResource(
     normalizationContext: ['groups' => ['read:user:collection']],
     denormalizationContext: ['groups' => ['write:user']],
+    paginationItemsPerPage:12 ,
     itemOperations: [
         'put',
         'get' => [

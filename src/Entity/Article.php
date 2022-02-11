@@ -2,10 +2,12 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ArticleRepository;
 use Doctrine\Common\Collections\Collection;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -22,6 +24,11 @@ use Symfony\Component\Validator\Constraints as Assert;
         ]
     ]
 )]
+#[ApiFilter(
+    SearchFilter::class ,
+    properties: ['name' => 'partial']
+)]
+#[ApiFilter(SearchFilter::class)]
 class Article
 {
     #[ORM\Id]
@@ -75,9 +82,6 @@ class Article
     #[Groups(['read:vente:item', 'read:enchere:item', 'read:enchereInverse:item','write:article'])]
     private $documents;
 
-    #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'articles')]
-    #[Groups(['read:vente:item','write:article'])]
-    private $categorie;
 
     #[ORM\OneToOne(mappedBy: 'article', targetEntity: Vente::class, cascade: ['persist', 'remove'])]
     private $vente;
@@ -90,7 +94,6 @@ class Article
     {
         $this->fabrication_date = new \DateTime();
         $this->documents = new ArrayCollection();
-        $this->categorie = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -200,29 +203,7 @@ class Article
         return $this;
     }
 
-    /**
-     * @return Collection|category[]
-     */
-    public function getCategorie(): Collection
-    {
-        return $this->categorie;
-    }
-
-    public function addCategorie(Category $categorie): self
-    {
-        if (!$this->categorie->contains($categorie)) {
-            $this->categorie[] = $categorie;
-        }
-
-        return $this;
-    }
-
-    public function removeCategorie(Category $categorie): self
-    {
-        $this->categorie->removeElement($categorie);
-
-        return $this;
-    }
+    
 
     public function getVente(): ?Vente
     {

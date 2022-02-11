@@ -4,9 +4,11 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\EnchereRepository;
+use ApiPlatform\Core\Annotation\ApiFilter;
 use Doctrine\Common\Collections\Collection;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -14,6 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ApiResource(
     normalizationContext: ['groups' => ['read:enchere:collection']],
     denormalizationContext: ['groups' => ['write:enchere']],
+    paginationItemsPerPage:12 ,
     itemOperations: [
         'put',
         'delete',
@@ -21,6 +24,10 @@ use Symfony\Component\Validator\Constraints as Assert;
             'normalisation_context' => ['groups' => ['read:enchere:collection', 'read:enchere:item']]
         ]
     ]
+)]
+#[ApiFilter(
+    SearchFilter::class ,
+    properties: ['category_id' => 'exact', 'article_id' => 'exact']
 )]
 class Enchere
 {
@@ -81,24 +88,33 @@ class Enchere
     #[ORM\Column(type: 'datetime_immutable')]
     private $updatedAt;
 
-    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'ventes')]
+    #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: false)]
     #[Groups('read:enchere:collection')]
     private $user;
+
+    #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'encheres')]
+    #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['read:enchere:item','write:enchere'])]
+    private $category;
+
+ 
 
 
     public function __construct()
     {
         $this->surveilles = new ArrayCollection();
         $this->augmentations = new ArrayCollection();
-        $this->createdAt = new \DateTimeImmutable();
-        $this->updatedAt = new \DateTimeImmutable();
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
+   
     }
 
     public function getId(): ?int
     {
         return $this->id;
     }
+
 
     public function getQuantity(): ?int
     {
@@ -268,26 +284,38 @@ class Enchere
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getCreatedAt(): ?\DateTime
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): self
+    public function setCreatedAt(\DateTime $createdAt): self
     {
         $this->createdAt = $createdAt;
 
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTimeImmutable
+    public function getUpdatedAt(): ?\DateTime
     {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(\DateTimeImmutable $updatedAt): self
+    public function setUpdatedAt(\DateTime $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
 
         return $this;
     }

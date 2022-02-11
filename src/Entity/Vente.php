@@ -2,9 +2,14 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiResource;
-use App\Repository\VenteRepository;
+use ApiPlatform\Core\Annotation\ApiFilter;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\VenteRepository;
+use Doctrine\Common\Collections\Collection;
+use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use Doctrine\Common\Collections\ArrayCollection;
+
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -12,6 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ApiResource(
     normalizationContext: ['groups' => ['read:vente:collection']],
     denormalizationContext: ['groups' => ['write:vente']],
+    paginationItemsPerPage:12 ,
     itemOperations: [
         'put',
         'delete',
@@ -19,6 +25,10 @@ use Symfony\Component\Validator\Constraints as Assert;
             'normalisation_context' => ['groups' => ['read:vente:collection', 'read:vente:item']]
         ]
     ],
+)]
+#[ApiFilter(
+    SearchFilter::class ,
+    properties: ['category_id' => 'exact', 'article_id' => 'exact']
 )]
 class Vente
 {
@@ -49,6 +59,7 @@ class Vente
     #[Groups('read:vente:collection', 'write:vente')]
     private $user;
 
+
     #[ORM\Column(type: 'datetime')]
     #[Groups('read:vente:item')]
     private $createdAt;
@@ -56,10 +67,16 @@ class Vente
     #[ORM\Column(type: 'datetime')]
     private $updatedAt;
 
+    #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'ventes')]
+    #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['read:vente:item','write:vente'])]
+    private $category;
+
     public function __construct()
     {
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();    
+
     }
 
     public function getId(): ?int
@@ -71,6 +88,8 @@ class Vente
     {
         return $this->quantity;
     }
+
+    
 
     public function setQuantity(int $quantity): self
     {
@@ -135,6 +154,18 @@ class Vente
     public function setUpdatedAt(\DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
 
         return $this;
     }

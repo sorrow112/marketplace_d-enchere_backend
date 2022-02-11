@@ -3,10 +3,12 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiFilter;
 use Doctrine\Common\Collections\Collection;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\EnchereInverseRepository;
 use Doctrine\Common\Collections\ArrayCollection;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -14,6 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ApiResource(
     normalizationContext: ['groups' => ['read:enchereInverse:collection']],
     denormalizationContext: ['groups' => ['write:enchereInverse']],
+    paginationItemsPerPage:12 ,
     itemOperations: [
         'put',
         'delete',
@@ -21,6 +24,10 @@ use Symfony\Component\Validator\Constraints as Assert;
             'normalisation_context' => ['groups' => ['read:enchereInverse:collection', 'read:enchereInverse:item']]
         ]
     ]
+)]
+#[ApiFilter(
+    SearchFilter::class ,
+    properties: ['category_id' => 'exact', 'article_id' => 'exact']
 )]
 class EnchereInverse
 {
@@ -55,6 +62,7 @@ class EnchereInverse
     #[Assert\GreaterThan('today')]
     private $start_date;
 
+
     #[ORM\Column(type: 'datetime')]
     #[Groups(['read:enchereInverse:collection', 'write:enchereInverse'])]
     #[Assert\GreaterThan('today')]
@@ -80,10 +88,15 @@ class EnchereInverse
     #[ORM\Column(type: 'datetime')]
     private $updatedAt;
 
-    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'ventes')]
+    #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: false)]
     #[Groups('read:enchereInverse:collection')]
     private $user;
+
+    #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'enchereInverses')]
+    #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['read:enchereInverse:item','write:enchereInverse'])]
+    private $category;
 
 
     public function __construct()
@@ -92,8 +105,9 @@ class EnchereInverse
         $this->reductions = new ArrayCollection();
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
-    }
+   }
 
+   
     public function getUser(): ?User
     {
         return $this->user;
@@ -287,6 +301,18 @@ class EnchereInverse
     public function setUpdatedAt(\DateTime $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
 
         return $this;
     }
