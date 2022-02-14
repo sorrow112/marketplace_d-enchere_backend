@@ -25,10 +25,9 @@ use Symfony\Component\Validator\Constraints as Assert;
             'normalisation_context' => ['groups' => ['read:vente:collection', 'read:vente:item']]
         ]
     ],
-)]
-#[ApiFilter(
+),ApiFilter(
     SearchFilter::class ,
-    properties: ['category_id' => 'exact', 'article_id' => 'exact']
+    properties: ['user' => 'exact', 'category' => 'exact','id' => 'exact']
 )]
 class Vente
 {

@@ -4,11 +4,21 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\DocumentRepository;
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 #[ORM\Entity(repositoryClass: DocumentRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    itemOperations: [
+        'get',
+        'delete'
+    ]
+),ApiFilter(
+    SearchFilter::class ,
+    properties: ['article' => 'exact']
+)]
 class Document
 {
     #[ORM\Id]

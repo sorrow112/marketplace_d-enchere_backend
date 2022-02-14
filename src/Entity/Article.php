@@ -23,12 +23,10 @@ use Symfony\Component\Validator\Constraints as Assert;
             'normalisation_context' => ['groups' => ['read:article:collection', 'read:article:item']]
         ]
     ]
-)]
-#[ApiFilter(
+        ),ApiFilter(
     SearchFilter::class ,
-    properties: ['name' => 'partial']
+    properties: ['name' => 'partial', 'id' => 'exact']
 )]
-#[ApiFilter(SearchFilter::class)]
 class Article
 {
     #[ORM\Id]

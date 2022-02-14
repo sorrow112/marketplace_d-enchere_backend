@@ -19,6 +19,21 @@ class TestRepository extends ServiceEntityRepository
         parent::__construct($registry, Test::class);
     }
 
+    /**
+     * @return Test[] Returns an array of Test objects
+     */
+    
+    public function findByName($value)
+    {
+        return $this->createQueryBuilder('t')
+            ->andWhere('t.name = :val')
+            ->setParameter('val', $value)
+            ->orderBy('t.id', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+    
     // /**
     //  * @return Test[] Returns an array of Test objects
     //  */
@@ -35,6 +50,7 @@ class TestRepository extends ServiceEntityRepository
         ;
     }
     */
+    
 
     /*
     public function findOneBySomeField($value): ?Test

@@ -4,19 +4,30 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\SurveilleRepository;
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use App\Controller\SurveilleCountController;
 use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 #[ORM\Entity(repositoryClass: SurveilleRepository::class)]
 #[ApiResource(
     normalizationContext: ['groups' => ['read:surveille:collection']],
     denormalizationContext: ['groups' => ['write:surveille']],
+    collectionOperations:[
+        'get',
+        'post',
+
+    ],
     itemOperations: [
         'delete',
         'get' => [
             'normalisation_context' => ['groups' => ['read:surveille:collection']]
         ]
     ]
+        ),ApiFilter(
+    SearchFilter::class ,
+    properties: ['user_id' => 'exact']
 )]
 class Surveille
 {

@@ -2,12 +2,20 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiResource;
-use App\Repository\TestRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\TestRepository;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Annotation\ApiResource;
+use App\Controller\SurveilleCountController;
+use ApiPlatform\Core\OpenApi\Model\Parameter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+
+
 
 #[ORM\Entity(repositoryClass: TestRepository::class)]
-#[ApiResource]
+#[ApiResource()
+,ApiFilter(SearchFilter::class, properties: ['name'=>'partial'])]
+
 class Test
 {
     #[ORM\Id]

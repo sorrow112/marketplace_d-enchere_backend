@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\Collection;
 use ApiPlatform\Core\Annotation\ApiResource;
+use App\Controller\UserDataController;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -22,6 +23,13 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
         'put',
         'get' => [
             'normalisation_context' => ['groups' => ['read:user:collection', 'read:user:item']]
+        ],
+        'getData' =>[
+            'paginationItemsPerPage'=> false,
+            'path' => '/userdata',
+            'method'=> 'get',
+            'controller' => UserDataController::class,
+            'read'=>false,
         ]
     ]
 )]
@@ -30,7 +38,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(['read:vente:item', 'read:vente:collection', 'read:transaction:item', 'read:panier:collection', 'read:fermeture:collection'])]
+    #[Groups(['read:vente:item', 'read:vente:collection', 'read:transaction:item', 'read:panier:collection', 'read:fermeture:collection','read:user:collection'])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
@@ -86,10 +94,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $avatar;
 
     #[ORM\Column(type: 'json')]
+    #[Groups(['write:user', 'read:user:collection'])]
     private $roles = [];
 
     #[ORM\Column(type: 'boolean')]
-    #[Groups(['write:user'])]
+    #[Groups(['write:user','read:user:collection'])]
     private $isActive;
 
     #[ORM\OneToMany(mappedBy: 'transmitter', targetEntity: DemandeDevis::class, orphanRemoval: true)]

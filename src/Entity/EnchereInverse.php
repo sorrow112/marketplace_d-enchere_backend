@@ -24,11 +24,12 @@ use Symfony\Component\Validator\Constraints as Assert;
             'normalisation_context' => ['groups' => ['read:enchereInverse:collection', 'read:enchereInverse:item']]
         ]
     ]
-)]
-#[ApiFilter(
+        ),
+        ApiFilter(
     SearchFilter::class ,
-    properties: ['category_id' => 'exact', 'article_id' => 'exact']
+    properties: ['user' => 'exact', 'category' => 'exact','id' => 'exact']
 )]
+
 class EnchereInverse
 {
     #[ORM\Id]
