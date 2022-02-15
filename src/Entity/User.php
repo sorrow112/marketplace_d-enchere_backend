@@ -31,6 +31,9 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
             'method'=> 'get',
             'controller' => UserDataController::class,
             'read'=>false,
+            // 'openapi_context' => [
+            //     'security' =>[['bearerAuth' => []]]
+            // ]
         ]
     ]
 )]
@@ -182,7 +185,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface{
 
     public function getUserName(): ?string
     {
-        return $this->userName;
+        return $this->email;
     }
 
     public function setUserName(string $userName): self
@@ -191,7 +194,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface{
 
         return $this;
     }
-
+    public function getRealUserName(): ?string
+    {
+        return $this->userName;
+    }
     public function getEmail(): ?string
     {
         return $this->email;
