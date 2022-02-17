@@ -1,3 +1,6 @@
-body {
-    background-color: lightgray;
+
+.topnavlink{
+    display: "block";
+    color: "black";
+    margin-right: "3%";   
 }

@@ -20,10 +20,12 @@
     "dependencies": {
         "@emotion/react": "^11.7.1",
         "@emotion/styled": "^11.6.0",
-        "@mui/icons-material": "^5.4.1",
-        "@mui/material": "^5.4.1",
+        "@mui/icons-material": "^5.4.2",
+        "@mui/material": "^5.4.2",
+        "@mui/styles": "^5.4.2",
         "prop-types": "^15.8.1",
         "react": "^17.0.2",
+        "react-autowhatever": "^10.2.1",
         "react-dom": "^17.0.2"
     }
 }

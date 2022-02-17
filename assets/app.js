@@ -1,12 +1,15 @@
 
-import './styles/app.css';
 import ReactDOM from 'react-dom';
-
+import Base from './components/Base.js';
 import React from 'react'
+import Test from './components/Test.js';
+
+
+
 
 const App = () => {
   return (
-    <div> <h1> react works!</h1> </div>
+    <div>  <Base /></div>
   )
 }
 
