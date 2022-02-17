@@ -4,25 +4,40 @@ import logoPath from "../media/images/logo.png";
 import "../styles/app.css";
 import Autowhatever from "react-autowhatever/dist/Autowhatever";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import { Box , Select,MenuItem,Toolbar,Typography,Link,IconButton,AppBar,TextField,FormControl,InputLabel} from "@mui/material";
-import { makeStyles } from '@mui/styles';
-
+import {
+  Box,
+  Select,
+  MenuItem,
+  Toolbar,
+  Typography,
+  Link,
+  IconButton,
+  AppBar,
+  TextField,
+  FormControl,
+  InputLabel,
+  Grid,
+} from "@mui/material";
+import { makeStyles } from "@mui/styles";
+import TopNavLink from "./customComponents/topnav/TopNavLink";
 
 const useStyles = makeStyles({
   topnavlink: {
     display: "block",
     color: "black!important",
-    marginRight: "3%!important", 
+    marginRight: "3%!important",
     marginLeft: "2%!important",
   },
   logo: {
     width: "10%",
-    marginRight: "1%", 
-  }
+    marginRight: "1%",
+    minWidth: 100,
+    marginRight:20
+  },
 });
 
 const TopNavBar = () => {
-  const classes = useStyles();  //could take props
+  const classes = useStyles(); //could take props
   return (
     <div>
       <Box
@@ -32,83 +47,76 @@ const TopNavBar = () => {
         }}
       >
         <AppBar sx={{ backgroundColor: "#DCDCDC" }} position="static">
-          <Toolbar>
-            <IconButton
-              size="large"
-              edge="start"
-              aria-label="open drawer"
-              sx={{ mr: "1%" }}
-            >
-              <MenuIcon />
-            </IconButton>
+          <Grid container>
+            <Grid xs={9} sx={{
+              display: "flex",
+              paddingLeft: "20px",
+              alignItems: "center",
 
-            <img src={logoPath} className={classes.logo} />
+            }}>
+              <IconButton
+                size="large"
+                edge="start"
+                aria-label="open drawer"
+                sx={{ mr: "1%" }}
+              >
+                <MenuIcon />
+              </IconButton>
 
-            <Link
-              variant="h6"
-              noWrap
-              href="#"
-              underline="none"
-              className={classes.topnavlink}
-            >
-              tous les encheres
-            </Link>
-            <Link
-              variant="h6"
-              noWrap
-              href="#"
+              <img src={logoPath} className={classes.logo} />
 
-              underline="none"
-              className={classes.topnavlink}
-            >
-              categories
-            </Link>
-            <FormControl sx={{ width: "8%" }}>
-            <InputLabel >type</InputLabel>
-              <Select>
-                <MenuItem value={"enchere"}>enchere</MenuItem>
-                <MenuItem value={"enchereInv"}>enchere inverse</MenuItem>
-                <MenuItem value={"vente"}>ventes</MenuItem>
-                <MenuItem value={"user"}>utilisateurs</MenuItem>
-              </Select>
-            </FormControl>
-            {/* uncomment for real search bar */}
-            {/* <Autowhatever
+              <TopNavLink text="tous les encheres"></TopNavLink>
+              <TopNavLink text="categories"></TopNavLink>
+              <FormControl sx={{ width: "8%" , marginLeft:5}}>
+                <InputLabel>type</InputLabel>
+                <Select>
+                  <MenuItem value={"enchere"}>enchere</MenuItem>
+                  <MenuItem value={"enchereInv"}>enchere inverse</MenuItem>
+                  <MenuItem value={"vente"}>ventes</MenuItem>
+                  <MenuItem value={"user"}>utilisateurs</MenuItem>
+                </Select>
+              </FormControl>
+              {/* uncomment for real search bar */}
+              {/* <Autowhatever
             //   items={}                 //list of items to search
             //   renderItem={}            //the value to display (name)
             //   inputProps={}            //placeholder/value(the onChange state value)/onChange: 
             //   highlightedItemIndex={}  //hovered item index
             /> */}
-            <TextField
-              id="outlined-basic"
-              label="Outlined"
-              variant="outlined"
-              sx={{ width: "25%" }}
-            />
-            <Link
-              variant="h6"
-              noWrap
-              href="#"
-              underline="none"
-              className={classes.topnavlink}
-            >se connecter</Link>
-              <Link
-              variant="h6"
-              noWrap
-              href="#"
-              underline="none"
-              className={classes.topnavlink}
-            >créer un compte</Link>
-            
-            <IconButton
-              size="large"
-              edge="end"
-              aria-label="open drawer"
-              sx={{ ml: "0.5%" }}
+              <TextField
+                id="outlined-basic"
+                label="Outlined"
+                variant="outlined"
+                sx={{ width: "30%",
+              mr:5
+              , minWidth:100}}
+              />
+              
+            </Grid>
+            <Grid
+
+              xs={3}
+              sx={{
+                display: "flex",
+                justifyContent: "flex-end",
+                alignItems: "center",
+                paddingRight: "20px",
+              }}
             >
-              <ShoppingCartIcon />
-            </IconButton>
-          </Toolbar>
+             
+              <TopNavLink text="se connecter"></TopNavLink>
+              <TopNavLink text="créer un compte"></TopNavLink>
+
+              <IconButton
+                size="large"
+                edge="end"
+                aria-label="open drawer"
+                sx={{ ml: "0.5%" }}
+              >
+                <ShoppingCartIcon />
+              </IconButton>
+            </Grid>
+          </Grid>
         </AppBar>
       </Box>
     </div>
