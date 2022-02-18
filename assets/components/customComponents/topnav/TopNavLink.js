@@ -3,11 +3,18 @@ import { styled } from "@mui/system";
 import { Link } from "@mui/material";
 
 const TopNavLink = (props) => {
-  return (
-    <Link variant="h8" href="#" underline="none" >
-      {props.text}
-    </Link>
-  );
+  const CustomLink = styled(Link)(({ theme }) => ({
+    [theme.breakpoints.down("md")]: {
+      display: "none",
+    },
+    marginLeft:5
+  }));
+    return (
+      <CustomLink variant="h6" href="#" underline="none" >
+        {props.text}
+      </CustomLink>
+  )
+
 };
 
 export default TopNavLink;

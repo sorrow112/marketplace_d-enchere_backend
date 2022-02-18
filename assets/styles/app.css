@@ -1,6 +1,6 @@
 
-.topnavlink{
-    display: "block";
-    color: "black";
-    margin-right: "3%";   
+.logo {
+    width: 10%;
+    min-width: 100px;
+    margin-right: 20px;
 }

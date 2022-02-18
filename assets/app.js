@@ -35,12 +35,18 @@ const theme = createTheme({
         },
       },
     },
+    MuiAppBar:{
+      styleOverrides: {
+        root: {
+          backgroundColor:"#FCF8FF"
+        }
+      }
+    }
   },
 
 })
 
 const App = () => {
-  console.log(theme.palette.info.dark)
   return (
     <ThemeProvider theme={theme}> 
     <Base />
