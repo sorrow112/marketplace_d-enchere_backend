@@ -5,7 +5,7 @@ import "../styles/app.css";
 import Autowhatever from "react-autowhatever/dist/Autowhatever";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import TopNavLink from "./customComponents/topnav/TopNavLink";
-import {TopNavGrid} from "./customComponents/topnav/general";
+import {TopNavGrid, TopAppBar} from "./customComponents/topnav/general";
 import {
   Box,
   Select,
@@ -19,10 +19,17 @@ import {
   Grid,
   
 } from "@mui/material";
-
+import MyDrawer from "./customComponents/topnav/Drawer";
 
 
 const TopNavBar = () => {
+  //pass this state to the Drawer component !!
+  const [open, setOpen] = React.useState(false);
+
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+
   return (
       <Box
         sx={{
@@ -30,17 +37,19 @@ const TopNavBar = () => {
           backgroundColor: "#F5F5F5",
         }}
       >
-        <AppBar position="static">
+        <TopAppBar position="static">
           <Grid container>
             <TopNavGrid
               md={8}
               sm={11}
+              item
             >
               <IconButton
                 size="large"
                 edge="start"
                 aria-label="open drawer"
-                sx={{ mr: 3 }}
+                onClick={handleDrawerOpen}
+                sx={{ mr: 2, ...(open && { display: 'none' })}}
               >
                 <MenuIcon />
               </IconButton>
@@ -73,6 +82,7 @@ const TopNavBar = () => {
             <TopNavGrid
               md={4}
               sm={1}
+              item
               sx={{
                 justifyContent: "flex-end",
                 paddingRight: 2
@@ -90,7 +100,8 @@ const TopNavBar = () => {
               </IconButton>
             </TopNavGrid>
           </Grid>
-        </AppBar>
+        </TopAppBar>
+        <MyDrawer />
       </Box>
   );
 };
