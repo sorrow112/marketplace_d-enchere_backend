@@ -86,24 +86,27 @@ const TopNavBar = () => {
               sx={{
                 justifyContent: "flex-end",
                 paddingRight: 2
+                
               }}
             > 
-              <TopNavLink text="se connecter"></TopNavLink>
+              <TopNavLink text="se connecter" ></TopNavLink>
               <TopNavLink text="créer un compte"></TopNavLink>
               <IconButton
                 size="large"
                 edge="end"
                 aria-label="open drawer"
-                sx={{ ml: "0.5%" }}
+                sx={{ ml: "0.5%" ,
+                }}
               >
                 <ShoppingCartIcon />
               </IconButton>
             </TopNavGrid>
           </Grid>
         </TopAppBar>
-        <MyDrawer />
+        <MyDrawer open={open} setOpen={setOpen} />
       </Box>
   );
 };
+
 
 export default TopNavBar;

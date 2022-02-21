@@ -75,7 +75,7 @@ class OpenApiFactory implements OpenApiFactoryInterface
             ),
 
         );
-        $openApi->getPaths()->addPath('/api/login' , $pathItem);
+        $openApi->getPaths()->addPath('/api/login_check' , $pathItem);
 
         $pathItem = new PathItem(
             post: new Operation(

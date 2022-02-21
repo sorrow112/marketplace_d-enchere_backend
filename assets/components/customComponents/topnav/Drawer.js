@@ -11,39 +11,39 @@ import {
 import { DrawerHeader } from "./general";
 import { ChevronLeft } from "@mui/icons-material";
 
-const MyDrawer = () => {
-  const listeElems1 = {
-    "tous les encheres": "browseAll",
-    "categories": "browseCategories",
-    "nos produits": "sales",
-    "a propos de nous": "about",
-    "contactez nous": "contact",
-  };
-  //this changes if the state of user is authorized
-  const listeElems2 = {
-    "créer un compte": "register",
-    "se connecter": "login",
-    "politiques d'intimité": "privacyPolicies",
-  };
-  //to this one
-  const listeElems2V2 = {
-    "commancer un enchère" : "makeEnchere",
-    "commancer un enchère Inversé" : "makeEnchereInverse",
-    "envoyer une demande de devis": "sendDemand",
-    
-    "liste de surveilles": "watchList",
-    "vos Encheres" : "userEncheres",
-    "vos Encheres Inversés" : "userEncheresInverses",
-    "les demandes de devis recus" : "demandesRecus",
-    "les propositions recus" : "propositions",
 
-    "mon compte": "AccountInfos",
-    "se déconnecter": "logout",
-    "politiques d'intimité": "privacyPolicies",
-  };
+const listeElems1 = {
+  "tous les encheres": "browseAll",
+  "categories": "browseCategories",
+  "nos produits": "sales",
+  "a propos de nous": "about",
+  "contactez nous": "contact",
+};
+//this changes if the state of user is authorized
+const listeElems2 = {
+  "créer un compte": "register",
+  "se connecter": "login",
+  "politiques d'intimité": "privacyPolicies",
+};
+//to this one
+const listeElems2V2 = {
+  "commancer un enchère" : "makeEnchere",
+  "commancer un enchère Inversé" : "makeEnchereInverse",
+  "envoyer une demande de devis": "sendDemand",
+  
+  "liste de surveilles": "watchList",
+  "vos Encheres" : "userEncheres",
+  "vos Encheres Inversés" : "userEncheresInverses",
+  "les demandes de devis recus" : "demandesRecus",
+  "les propositions recus" : "propositions",
 
-  //you should get this state from TopNavBar component
-  const [open, setOpen] = React.useState(true);
+  "mon compte": "AccountInfos",
+  "se déconnecter": "logout",
+  "politiques d'intimité": "privacyPolicies",
+};
+
+const MyDrawer = ({open, setOpen}) => {
+  
 
   const handleDrawerClose = () => {
     setOpen(false);

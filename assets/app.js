@@ -2,9 +2,12 @@
 import ReactDOM from 'react-dom';
 import Base from './components/Base.js';
 import React from 'react'
-import Test from './components/Test.js';
 import { createTheme, ThemeProvider  } from '@mui/material/styles';
-import Button from '@mui/material/Button';
+import { createStore } from 'redux';
+import myReducers from './reducers/index.js';
+import { Provider } from 'react-redux';
+
+const store = createStore(myReducers, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
 const theme = createTheme({
   palette: {
@@ -41,10 +44,10 @@ const theme = createTheme({
           backgroundColor:"#FCF8FF"
         }
       }
-    }
-  },
+    },
+    
 
-})
+}});
 
 const App = () => {
   return (
@@ -56,5 +59,9 @@ const App = () => {
 
 export default App
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(
+  <Provider store={store}>
+<App />
+</Provider>
+, document.getElementById('root'));
 

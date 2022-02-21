@@ -47,7 +47,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface{
     #[ORM\Column(type: 'string', length: 255)]
     #[Groups(['write:user', 'read:user:item'])]
     #[Assert\Regex(
-        pattern: "/^[a-zA-Z ,.'-]{2,5}+$/i",
+        pattern: "/^[a-z ,.'-]+$/i",
         message: "le nom ne doit pas contenir des characteres speciaux et ça doit etre entre 2 et 5 mots"
     )]
     private $name;
@@ -61,10 +61,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface{
         maxMessage: "le nom d'utlisateur saisit est très long",
     )]
     #[Assert\Regex(
-        pattern: "/^[a-zA-Z ,.'-]{,1}+$/i",
+        pattern: "/^(?=[a-zA-Z0-9._]{8,20}$)(?!.*[_.]{2})[^_.].*[^_.]$/",
         message: "le nom d'utilisateur ne doit pas contenir des characteres speciaux"
     )]
-    private $userName;
+    private $displayName;
 
     #[ORM\Column(type: 'string', length: 180, unique: true)]
     #[Groups(['write:user', 'read:user:collection'])]
@@ -87,7 +87,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface{
         maxMessage: 'un numero de telephone a 8 chiffres',
     )]
     #[Assert\Regex(
-        pattern: "/^[0-9]{,1}+$/i",
+        pattern: "/^[0-9]{8}$/",
         message: "votre numero de telephone doit contenir uniquement des chiffres"
     )]
     private $telephone;
@@ -144,6 +144,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface{
     #[ORM\OneToMany(mappedBy: 'transmittedTo', targetEntity: Transaction::class)]
     private $GotPayed;
 
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    private $birthDate;
+
     public function __construct()
     {
         $this->demandeDevisTransmis = new ArrayCollection();
@@ -187,16 +190,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface{
     {
         return $this->email;
     }
-
-    public function setUserName(string $userName): self
+    public function getDisplayName(): ?string
     {
-        $this->userName = $userName;
+        return $this->displayName;
+    }
+
+
+    public function setDisplayName(string $displayName): self
+    {
+        $this->displayName = $displayName;
 
         return $this;
-    }
-    public function getRealUserName(): ?string
-    {
-        return $this->userName;
     }
     public function getEmail(): ?string
     {
@@ -705,4 +709,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface{
     //         $payload['email']  // Custom
     //     );
     // }
+
+    public function getBirthDate(): ?\DateTimeInterface
+    {
+        return $this->birthDate;
+    }
+
+    public function setBirthDate(?\DateTimeInterface $birthDate): self
+    {
+        $this->birthDate = $birthDate;
+
+        return $this;
+    }
 }
