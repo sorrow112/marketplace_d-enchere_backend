@@ -45,7 +45,7 @@ export const Register = () => {
     event.preventDefault();
     const axios = require("axios");
     axios
-      .post("/api/users", {
+      .post("/api/register", {
         name: name,
         displayName: displayName,
         email: email,

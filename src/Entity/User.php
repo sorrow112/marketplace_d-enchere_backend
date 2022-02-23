@@ -7,12 +7,14 @@ use App\Repository\UserRepository;
 use App\Controller\UserDataController;
 use Doctrine\Common\Collections\Collection;
 use ApiPlatform\Core\Annotation\ApiResource;
+use App\Controller\RegisterController;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
-
+use Symfony\Component\Serializer\Annotation\SerializedName;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Security\User\JWTUserInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
@@ -34,6 +36,13 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
             // 'openapi_context' => [
             //     'security' =>[['bearerAuth' => []]]
             // ]
+            ],
+        'register'=>[
+            'path' => '/register',
+            'method'=>'post',
+            'controller' => RegisterController::class,
+            'normalization_context' => ['groups' => 'write:user'],
+            'read' => false,
         ]
     ]
 )]
@@ -76,6 +85,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface{
    
     #[ORM\Column(type: 'string', length: 255)]
     #[Groups(['write:user'])]
+    #[SerializedName("password")]
     private $password;
 
     #[ORM\Column(type: 'string', length: 255)]
@@ -147,6 +157,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface{
     #[ORM\Column(type: 'datetime', nullable: true)]
     private $birthDate;
 
+
     public function __construct()
     {
         $this->demandeDevisTransmis = new ArrayCollection();
@@ -163,9 +174,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface{
         $this->Payed = new ArrayCollection();
         $this->GotPayed = new ArrayCollection();
         $this->isActive = true;
-        // $this->username = $username;
-        // $this->roles = $roles;
-        // $this->email = $email;
     }
     
 
@@ -233,10 +241,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface{
 
     public function setPassword(string $password): self
     {
+
         $this->password = $password;
 
         return $this;
     }
+
 
     /**
      * @see UserInterface
