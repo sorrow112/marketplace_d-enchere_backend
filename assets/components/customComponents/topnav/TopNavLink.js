@@ -7,7 +7,14 @@ const TopNavLink = (props) => {
     [theme.breakpoints.down("md")]: {
       display: "none",
     },
-    marginLeft:5,
+    paddingLeft: 20,
+    paddingRight: 20,
+    borderRadius: 25,
+    "&:hover": {
+      backgroundColor: theme.palette.info.main,
+      color: theme.palette.primary.main
+    }
+
 
   }));
     return (

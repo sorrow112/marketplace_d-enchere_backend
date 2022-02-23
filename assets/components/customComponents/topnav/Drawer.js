@@ -7,6 +7,7 @@ import {
   ListItemIcon,
   ListItemText,
   ListItem,
+  Box
 } from "@mui/material";
 import { DrawerHeader } from "./general";
 import { ChevronLeft } from "@mui/icons-material";
@@ -20,6 +21,10 @@ const styles = {
       boxSizing: "border-box",
     },
   },
+  item:{"&:hover": {
+    backgroundColor: "info.main",
+    color: "primary.main"
+  }}
 
 }
 
@@ -53,6 +58,7 @@ const listeElems2V2 = {
   "politiques d'intimité": "privacyPolicies",
 };
 
+
 const MyDrawer = ({open, setOpen}) => {
   
   const handleDrawerClose = () => {
@@ -66,15 +72,17 @@ const MyDrawer = ({open, setOpen}) => {
       anchor="left"
       open={open}
     >
-      <DrawerHeader>
+      
+      <DrawerHeader >
         <IconButton onClick={handleDrawerClose}>
           <ChevronLeft />
         </IconButton>
       </DrawerHeader>
+
       <Divider />
       <List>
         {Object.keys(listeElems1).map((key, index) => (
-          <ListItem button key={index} id={listeElems1[key]}>
+          <ListItem sx={styles.item} button key={index} id={listeElems1[key]}>
             <ListItemText primary={key} />
           </ListItem>
         ))}
@@ -82,7 +90,7 @@ const MyDrawer = ({open, setOpen}) => {
       <Divider />
       <List>
         {Object.keys(listeElems2).map((key, index) => (
-          <ListItem button key={index} id={listeElems1[key]}>
+          <ListItem sx={styles.item} button key={index} id={listeElems1[key]}>
             <ListItemText primary={key} />
           </ListItem>
         ))}
