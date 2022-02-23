@@ -12,12 +12,12 @@ const store = createStore(myReducers, window.__REDUX_DEVTOOLS_EXTENSION__ && win
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#362B48',
+      main: '#FCF8FF',
       dark: '#362B48',
       light: '#FCF8FF'
     },
     secondary: {
-      main: '#FCF8FF',
+      main: '#362B48',
       dark: '#FCF8FF',
       light: '#362B48'
     },
@@ -27,27 +27,20 @@ const theme = createTheme({
       light: '#5927E5'
     }
   },
-  components: {
-    MuiLink: {
-      styleOverrides: {
-        root: {
-          color: "black",
-          marginRight: "2%", 
-          marginLeft: "2%",
-          minWidth:65
-        },
+});
+
+const darkTheme = createTheme(  {components: {
+  MuiLink: {
+    styleOverrides: {
+      root: {
+        marginRight: "2%", 
+        marginLeft: "2%",
+        minWidth:65,
       },
     },
-    MuiAppBar:{
-      styleOverrides: {
-        root: {
-          backgroundColor:"#FCF8FF"
-        }
-      }
-    },
-    
+  },
 
-}});
+}})
 
 
 

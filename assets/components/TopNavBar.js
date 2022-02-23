@@ -10,9 +10,7 @@ import {
   Box,
   Select,
   MenuItem,
-  Typography,
   IconButton,
-  AppBar,
   TextField,
   FormControl,
   InputLabel,
@@ -23,7 +21,17 @@ import MyDrawer from "./customComponents/topnav/Drawer";
 
 
 const TopNavBar = () => {
-  //pass this state to the Drawer component !!
+  const styles = {
+    topBox:{
+      height: 70,
+
+    },
+    secondGrid:{
+      justifyContent: "flex-end",
+      paddingRight: 2
+    },
+  }
+
   const [open, setOpen] = React.useState(false);
 
   const handleDrawerOpen = () => {
@@ -32,12 +40,9 @@ const TopNavBar = () => {
 
   return (
       <Box
-        sx={{
-          height: 70,
-          backgroundColor: "#F5F5F5",
-        }}
+        sx={styles.topBox}
       >
-        <TopAppBar position="static">
+        <TopAppBar position="static" >
           <Grid container>
             <TopNavGrid
               md={8}
@@ -54,7 +59,7 @@ const TopNavBar = () => {
                 <MenuIcon />
               </IconButton>
               <img src={logoPath} className="logo" />
-              <TopNavLink text="tous les encheres"></TopNavLink>
+              <TopNavLink text="encheres"></TopNavLink>
               <TopNavLink text="categories"></TopNavLink>
               <FormControl sx={{ minWidth: "8%", ml: "5%"}}>
                 <InputLabel>type</InputLabel>
@@ -83,11 +88,7 @@ const TopNavBar = () => {
               md={4}
               sm={1}
               item
-              sx={{
-                justifyContent: "flex-end",
-                paddingRight: 2
-                
-              }}
+              sx={styles.secondGrid}
             > 
               <TopNavLink text="se connecter" ></TopNavLink>
               <TopNavLink text="créer un compte"></TopNavLink>

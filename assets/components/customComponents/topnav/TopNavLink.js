@@ -8,9 +8,10 @@ const TopNavLink = (props) => {
       display: "none",
     },
     marginLeft:5,
+
   }));
     return (
-      <CustomLink variant={"h6"} href="#" underline="none" >
+      <CustomLink variant={"h6"} href="#" underline="none" sx={{color:"secondary.main"}}>
         {props.text}
       </CustomLink>
   )

@@ -11,6 +11,17 @@ import {
 import { DrawerHeader } from "./general";
 import { ChevronLeft } from "@mui/icons-material";
 
+const styles = {
+  drawer:{
+    width: "25%",
+    flexShrink: 0,
+    "& .MuiDrawer-paper": {
+      width: "25%",
+      boxSizing: "border-box",
+    },
+  },
+
+}
 
 const listeElems1 = {
   "tous les encheres": "browseAll",
@@ -44,21 +55,13 @@ const listeElems2V2 = {
 
 const MyDrawer = ({open, setOpen}) => {
   
-
   const handleDrawerClose = () => {
     setOpen(false);
   };
 
   return (
     <Drawer
-      sx={{
-        width: "25%",
-        flexShrink: 0,
-        "& .MuiDrawer-paper": {
-          width: "25%",
-          boxSizing: "border-box",
-        },
-      }}
+      sx={styles.drawer}
       variant="persistent"
       anchor="left"
       open={open}

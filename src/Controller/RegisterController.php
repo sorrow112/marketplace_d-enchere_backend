@@ -18,23 +18,15 @@ class RegisterController extends AbstractController
     }
     public function __invoke($data)
     {
-
-        $user = new User();
-        $user->setName($data->getName());
-        $user->setDisplayName($data->getDisplayName());
-        $user->setEmail($data->getEmail());
+        //just replacing the plainPassword with a hashed version 
         $plainPassword = $data->getPassword();
         $hashedPassword = $this->passwordHasher->hashPassword(
-            $user,
+            $data,
             $plainPassword
         );
-        $user->setPassword($hashedPassword);
-        $user->setTelephone($data->getTelephone());
-        $user->setAvatar($data->getAvatar());
-        $user->setIsActive($data->getIsActive());
-        $user->setBirthDate($data->getBirthdate());
-        $this->entityManager->persist($user);
+        $data->setPassword($hashedPassword);
+        $this->entityManager->persist($data);
         $this->entityManager->flush();
-        return json_encode($user);
+        return json_encode($data);
     }
 }
