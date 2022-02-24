@@ -1,11 +1,12 @@
 
 import ReactDOM from 'react-dom';
-import Base from './components/Base.js';
+import Base from './components/base/Base.js';
 import React from 'react'
 import { createTheme, ThemeProvider  } from '@mui/material/styles';
 import { createStore } from 'redux';
 import myReducers from './reducers/index.js';
 import { Provider } from 'react-redux';
+import "./styles/app.css";
 
 const store = createStore(myReducers, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 

@@ -1,9 +1,9 @@
 import React from 'react'
-import { Register } from './Register'
-import TopNavBar from './TopNavBar'
+import Register from '../register/Register.js'
+import TopNavBar from './subComponents/TopNavBar'
 import { Box } from '@mui/material'
-import Login from './Login'
-import Homepage from './Homepage'
+import Login from '../login/Login.js'
+import Homepage from '../homepage/Homepage.js'
 
 
 const styles = {

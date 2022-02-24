@@ -3,14 +3,13 @@ import {
   CardContent,
   Container,
   Grid,
-  Toolbar,
   Typography,
 } from "@mui/material";
 import { Box, fontWeight } from "@mui/system";
 import React from "react";
-import image from "../media/images/homepageTopImage.jpg";
+import image from "../../media/images/homepageTopImage.jpg";
 
-import HomePageList from "./customComponents/HomePageList";
+import HomePageList from "../generalComponents/ProductsListing";
 
 const encheresInverses = {
   1: { nom: "pc", vendeur: "exemple123", prix: 80 },
@@ -139,16 +138,16 @@ const Homepage = () => {
       {/* section #3 */}
       <Box sx={{ mt: "10%", textAlign: "center" }}>
         <Typography variant="h4">nos produits</Typography>
-        <HomePageList ventes={ventes} />
+        <HomePageList ventes={ventes} elemsPerLine={8} />
         <Grid container >
           <Grid item xs={5.5}>
             <Typography variant="h4">nos enchères</Typography>
-            <HomePageList ventes={encheres} />
+            <HomePageList ventes={encheres} elemsPerLine={4} />
           </Grid>
-          <Grid xs={1}></Grid>
+          <Grid item xs={1}></Grid>
           <Grid item xs={5.5}>
             <Typography variant="h4">nos enchères inverses</Typography>
-            <HomePageList ventes={encheresInverses} />
+            <HomePageList ventes={encheresInverses} elemsPerLine={4} />
           </Grid>
         </Grid>
       </Box>

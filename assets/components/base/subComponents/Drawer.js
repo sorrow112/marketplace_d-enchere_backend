@@ -9,7 +9,7 @@ import {
   ListItem,
   Box
 } from "@mui/material";
-import { DrawerHeader } from "./general";
+import { DrawerHeader } from "../customComponents/general";
 import { ChevronLeft } from "@mui/icons-material";
 
 const styles = {

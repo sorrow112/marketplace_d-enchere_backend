@@ -1,11 +1,10 @@
 import * as React from "react";
 import MenuIcon from "@mui/icons-material/Menu";
-import logoPath from "../media/images/logo.png";
-import "../styles/app.css";
+import logoPath from "../../../media/images/logo.png";
 import Autowhatever from "react-autowhatever/dist/Autowhatever";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import TopNavLink from "./customComponents/topnav/TopNavLink";
-import {TopNavGrid, TopAppBar} from "./customComponents/topnav/general";
+import TopNavLink from "../customComponents/TopNavLink";
+import {TopNavGrid, TopAppBar} from "../customComponents/general";
 import {
   Box,
   Select,
@@ -17,7 +16,7 @@ import {
   Grid,
   
 } from "@mui/material";
-import MyDrawer from "./customComponents/topnav/Drawer";
+import MyDrawer from "./Drawer";
 
 
 const TopNavBar = () => {

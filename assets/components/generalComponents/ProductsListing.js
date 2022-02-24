@@ -1,4 +1,4 @@
-import { Card, CardContent, Toolbar, Typography } from '@mui/material'
+import { Card, CardContent, Grid, Typography } from '@mui/material'
 import React from 'react'
 import demoListImage from "../../media/images/demoListImage.png";
 
@@ -13,11 +13,12 @@ const styles = {
         mt: 2
       }
 }
-const HomePageList = ({ventes}) => {
+const ProductsListing = ({ventes ,elemsPerLine}) => {
     
   return (
-    <Toolbar sx={styles.productsGrid}>
+    <Grid container sx={styles.productsGrid}>
           {Object.keys(ventes).map((key, index) => (
+            <Grid item xs={12/elemsPerLine} key={key}>
             <Card key={index} >
               <CardContent>
                 <img src={demoListImage} className="cardImage" />
@@ -31,9 +32,10 @@ const HomePageList = ({ventes}) => {
                 
               </CardContent>
             </Card>
+            </Grid>
           ))}
-        </Toolbar>
+        </Grid>
   )
 }
 
-export default HomePageList
+export default ProductsListing
