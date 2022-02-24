@@ -136,17 +136,17 @@ const Homepage = () => {
         </Grid>
       </Box>
       {/* section #3 */}
-      <Box sx={{ mt: "10%", textAlign: "center" }}>
-        <Typography variant="h4">nos produits</Typography>
+      <Box sx={{ mt: "10%", textAlign: "center" , backgroundColor:"primary.main" }}>
+        <Typography variant="h4" color='secondary.main'>nos produits</Typography>
         <HomePageList ventes={ventes} elemsPerLine={8} />
         <Grid container >
           <Grid item xs={5.5}>
-            <Typography variant="h4">nos enchères</Typography>
+            <Typography variant="h4" color='secondary.main'>nos enchères</Typography>
             <HomePageList ventes={encheres} elemsPerLine={4} />
           </Grid>
           <Grid item xs={1}></Grid>
           <Grid item xs={5.5}>
-            <Typography variant="h4">nos enchères inverses</Typography>
+            <Typography variant="h4" color='secondary.main'>nos enchères inverses</Typography>
             <HomePageList ventes={encheresInverses} elemsPerLine={4} />
           </Grid>
         </Grid>

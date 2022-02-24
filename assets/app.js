@@ -4,7 +4,7 @@ import Base from './components/base/Base.js';
 import React from 'react'
 import { createTheme, ThemeProvider  } from '@mui/material/styles';
 import { createStore } from 'redux';
-import myReducers from './reducers/index.js';
+import myReducers from './redux/reducers/index.js';
 import { Provider } from 'react-redux';
 import "./styles/app.css";
 

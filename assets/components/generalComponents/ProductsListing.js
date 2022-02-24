@@ -7,8 +7,7 @@ const styles = {
         mt:3
     },
     productsGrid: { 
-        backgroundColor: "white" , 
-        justifyContent: "space-between", 
+        backgroundColor: "primary.main" , 
         padding: 3,
         mt: 2
       }
@@ -16,7 +15,7 @@ const styles = {
 const ProductsListing = ({ventes ,elemsPerLine}) => {
     
   return (
-    <Grid container sx={styles.productsGrid}>
+    <Grid container sx={{...styles.productsGrid, textAlign: "center"}} spacing={3}>
           {Object.keys(ventes).map((key, index) => (
             <Grid item xs={12/elemsPerLine} key={key}>
             <Card key={index} >

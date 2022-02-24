@@ -1,6 +1,5 @@
 import { Box, Button, Grid, TextField } from "@mui/material";
 import React from "react";
-import { useState } from "react";
 import DateAdapter from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DesktopDatePicker from "@mui/lab/DesktopDatePicker";
@@ -9,11 +8,11 @@ export const Register = () => {
 
   //#region form data state
   const [date, setDate] = React.useState(new Date());
-  const [name, setName] = React.useState("");
-  const [telephone, setTelephone] = React.useState("");
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
-  const [displayName, setDisplayName] = React.useState("");
+  const [name, setName] = React.useState();
+  const [telephone, setTelephone] = React.useState();
+  const [email, setEmail] = React.useState();
+  const [password, setPassword] = React.useState();
+  const [displayName, setDisplayName] = React.useState();
   //#endregion
 
   //#region state manipulation mathods
@@ -64,6 +63,14 @@ export const Register = () => {
   };
   //#endregion
 
+  const styles = {
+    form:{
+      "& .MuiTextField-root": { m: 1, width: "25ch" },
+      width: "80%",
+      display: "flex",
+      flexDirection: "column",
+    }
+  }
   return (
     <Grid
       container
@@ -77,12 +84,7 @@ export const Register = () => {
         <Box
           component="form"
           onSubmit={onSubmit}
-          sx={{
-            "& .MuiTextField-root": { m: 1, width: "25ch" },
-            width: "80%",
-            display: "flex",
-            flexDirection: "column",
-          }}
+          sx={styles.form}
         >
           <TextField
             required
@@ -129,7 +131,7 @@ export const Register = () => {
               renderInput={(params) => <TextField {...params} />}
             />
           </LocalizationProvider>
-          <Button type="submit">sub</Button>
+          <Button type="submit">soumettre</Button>
         </Box>
       </Grid>
     </Grid>

@@ -60,7 +60,8 @@ const TopNavBar = () => {
               <img src={logoPath} className="logo" />
               <TopNavLink text="encheres"></TopNavLink>
               <TopNavLink text="categories"></TopNavLink>
-              <FormControl sx={{ minWidth: "8%", ml: "5%"}}>
+              <Box sx={{ minWidth: 120 }}>
+              <FormControl fullWidth>
                 <InputLabel>type</InputLabel>
                 <Select>
                   <MenuItem value={"enchere"}>enchere</MenuItem>
@@ -69,6 +70,7 @@ const TopNavBar = () => {
                   <MenuItem value={"user"}>utilisateurs</MenuItem>
                 </Select>
               </FormControl>
+              </Box>
               {/* uncomment for real search bar */}
               {/* <Autowhatever
                 //   items={}                 //list of items to search

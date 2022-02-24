@@ -4,11 +4,13 @@ import TopNavBar from './subComponents/TopNavBar'
 import { Box } from '@mui/material'
 import Login from '../login/Login.js'
 import Homepage from '../homepage/Homepage.js'
+import VentesListing from '../productsPage/VentesListing.js'
+import CreerArticle from '../forms/CreerArticle.js'
 
 
 const styles = {
   body:{
-    backgroundColor: "secondary.main"
+    backgroundColor: "primary.main"
   }
 }
 const Base = () => {
@@ -16,9 +18,12 @@ const Base = () => {
     <Box sx={styles.body}>
     
     <TopNavBar />
-    <Homepage />
+    <CreerArticle />
+    
+    {/* <Homepage /> */}
     {/* <Register /> */}
     {/* <Login /> */}
+    {/* <VentesListing /> */}
     </Box>
   )
 }
