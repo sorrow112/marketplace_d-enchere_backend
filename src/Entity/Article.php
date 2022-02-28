@@ -42,8 +42,8 @@ class Article
     #[Assert\Length(
         min: 3,
         max: 15,
-        maxMessage: 'le nom de marque est trop long',
-        minMessage: 'le nom de marque est trop court'
+        maxMessage: 'le nom  est trop long',
+        minMessage: 'le nom  est trop court'
     )]
     private $name;
 
@@ -61,7 +61,6 @@ class Article
 
     #[ORM\Column(type: 'datetime')]
     #[Groups(['read:vente:item', 'read:enchere:item', 'read:enchereInverse:item','write:article'])]
-    #[Assert\LessThan('today')]
     private $fabrication_date;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
@@ -85,7 +84,7 @@ class Article
     private $vente;
 
     #[ORM\Column(type: 'text', nullable: true)]
-    #[Groups(['read:vente:item', 'read:enchere:item', 'read:enchereInverse:item'])]
+    #[Groups(['read:vente:item', 'read:enchere:item', 'read:enchereInverse:item','write:article'])]
     private $description;
 
     public function __construct()

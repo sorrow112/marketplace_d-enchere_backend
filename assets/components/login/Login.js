@@ -33,7 +33,7 @@ const Login = () => {
         event.preventDefault();
         const axios = require("axios");
         axios
-          .post("/api/login_check", {
+          .post("http://127.0.0.1:8000/api/login_check", {
             username: email,
             password: password,
           })

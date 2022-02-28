@@ -37,32 +37,32 @@ class Enchere
     private $id;
 
     #[ORM\Column(type: 'integer')]
-    #[Groups(['read:enchere:collection', 'write:enchere'])]
+    #[Groups(['read:enchere:collection', "read:enchere:item", 'write:enchere'])]
     #[Assert\Positive]
     private $quantity;
 
     #[ORM\Column(type: 'float')]
-    #[Groups(['read:enchere:item', 'write:enchere'])]
+    #[Groups(['read:enchere:item',"read:enchere:item", 'write:enchere'])]
     #[Assert\Positive]
     private $init_price;
 
     #[ORM\Column(type: 'float')]
-    #[Groups(['read:enchere:collection', 'write:enchere'])]
+    #[Groups(['read:enchere:collection',"read:enchere:item", 'write:enchere'])]
     #[Assert\Positive]
     private $immediate_price;
 
     #[ORM\Column(type: 'float')]
-    #[Groups(['read:enchere:collection', 'read:surveille:collection', 'write:enchere'])]
+    #[Groups(['read:enchere:collection', 'read:surveille:collection',"read:enchere:item", 'write:enchere'])]
     #[Assert\Positive]
     private $current_price;
 
     #[ORM\Column(type: 'datetime')]
-    #[Groups(['read:enchere:collection', 'write:enchere'])]
+    #[Groups(['read:enchere:collection',"read:enchere:item", 'write:enchere'])]
     #[Assert\GreaterThan('today')]
     private $start_date;
 
     #[ORM\Column(type: 'datetime')]
-    #[Groups(['read:enchere:collection', 'write:enchere'])]
+    #[Groups(['read:enchere:collection',"read:enchere:item", 'write:enchere'])]
     #[Assert\GreaterThan('today')]
     private $end_date;
 
@@ -78,23 +78,23 @@ class Enchere
 
     #[ORM\OneToOne(targetEntity: Article::class, cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['read:enchere:collection', 'read:surveille:collection', 'read:fermeture:collection'])]
+    #[Groups(['read:enchere:collection', 'read:surveille:collection', "read:enchere:item",'read:fermeture:collection'])]
     private $article;
 
-    #[ORM\Column(type: 'datetime_immutable')]
+    #[ORM\Column(type: 'datetime')]
     private $createdAt;
 
-    #[ORM\Column(type: 'datetime_immutable')]
+    #[ORM\Column(type: 'datetime')]
     private $updatedAt;
 
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups('read:enchere:collection')]
+    #[Groups("read:enchere:item",'read:enchere:collection', 'write:enchere')]
     private $user;
 
     #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'encheres')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['read:enchere:item','write:enchere'])]
+    #[Groups(['read:enchere:item','read:enchere:collection','write:enchere'])]
     private $category;
 
  

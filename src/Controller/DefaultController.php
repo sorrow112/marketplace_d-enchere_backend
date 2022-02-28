@@ -11,26 +11,26 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class DefaultController extends AbstractController
 {
-    #[Route('/', name: 'default')]
-    public function index(): Response
-    {
-        return $this->render('default/index.html.twig', [
-            'controller_name' => 'DefaultController',
-        ]);
-    }
+    // #[Route('/', name: 'default')]
+    // public function index(): Response
+    // {
+    //     return $this->render('default/index.html.twig', [
+    //         'controller_name' => 'DefaultController',
+    //     ]);
+    // }
 
-    #[Route('/hash', name:'hasher')]
-    public function hash(UserPasswordHasherInterface $hasher): Response
-    {
-        $user = new User();
-        $testPassword= "0000";
-        $hashedPassword = $hasher->hashPassword($user,$testPassword);
-        dd($hashedPassword);
+    // #[Route('/hash', name:'hasher')]
+    // public function hash(UserPasswordHasherInterface $hasher): Response
+    // {
+    //     $user = new User();
+    //     $testPassword= "0000";
+    //     $hashedPassword = $hasher->hashPassword($user,$testPassword);
+    //     dd($hashedPassword);
 
-        return $this->render('default/index.html.twig', [
-            'controller_name' => 'DefaultController',
-        ]);
-    }
+    //     return $this->render('default/index.html.twig', [
+    //         'controller_name' => 'DefaultController',
+    //     ]);
+    // }
     
 
 }

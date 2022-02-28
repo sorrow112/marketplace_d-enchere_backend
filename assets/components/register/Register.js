@@ -1,11 +1,18 @@
-import { Box, Button, Grid, TextField } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  CssBaseline,
+  Grid,
+  TextField,
+  Typography,
+} from "@mui/material";
 import React from "react";
 import DateAdapter from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DesktopDatePicker from "@mui/lab/DesktopDatePicker";
 
 export const Register = () => {
-
   //#region form data state
   const [date, setDate] = React.useState(new Date());
   const [name, setName] = React.useState();
@@ -44,7 +51,7 @@ export const Register = () => {
     event.preventDefault();
     const axios = require("axios");
     axios
-      .post("/api/register", {
+      .post("http://127.0.0.1:8000/api/register", {
         name: name,
         displayName: displayName,
         email: email,
@@ -64,76 +71,80 @@ export const Register = () => {
   //#endregion
 
   const styles = {
-    form:{
+    form: {
       "& .MuiTextField-root": { m: 1, width: "25ch" },
       width: "80%",
       display: "flex",
       flexDirection: "column",
-    }
-  }
+    },
+  };
   return (
-    <Grid
-      container
-      spacing={0}
-      direction="column"
-      alignItems="center"
-      justifyContent="center"
-      style={{ minHeight: "100vh" }}
-    >
-      <Grid item xs={8}>
-        <Box
-          component="form"
-          onSubmit={onSubmit}
-          sx={styles.form}
-        >
-          <TextField
-            required
-            id="name"
-            label="Nom complet"
-            value={name}
-            onChange={handleName}
-          />
-          <TextField
-            required
-            id="displayName"
-            label="Nom d'utilisateur"
-            value={displayName}
-            onChange={handleDisplayName}
-          />
-          <TextField
-            required
-            id="email"
-            label="Adresse Email"
-            value={email}
-            onChange={handleEmail}
-          />
-          <TextField
-            required
-            id="password"
-            label="mot de passe"
-            type="password"
-            value={password}
-            onChange={handlePassword}
-          />
-          <TextField
-            required
-            id="telephone"
-            label="numero de téléphone"
-            value={telephone}
-            onChange={handleTelephone}
-          />
-          <LocalizationProvider dateAdapter={DateAdapter}>
-            <DesktopDatePicker
-              label="date de naissance"
-              inputFormat="MM/dd/yyyy"
-              value={date}
-              onChange={setDate}
-              renderInput={(params) => <TextField {...params} />}
-            />
-          </LocalizationProvider>
-          <Button type="submit">soumettre</Button>
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <Box
+        sx={{
+          marginTop: 8,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <Typography variant="h2">s'inscrir</Typography>
+        <Box component="form" onSubmit={onSubmit} sx={{ mt: 3 }}>
+          <Grid container spacing={2}>
+            <Grid item>
+            <TextField
+              required
+              id="name"
+              label="Nom complet"
+              value={name}
+              onChange={handleName}
+            /></Grid><Grid item>
+            <TextField
+              required
+              id="displayName"
+              label="Nom d'utilisateur"
+              value={displayName}
+              onChange={handleDisplayName}
+            /></Grid><Grid item>
+            <TextField
+              required
+              id="email"
+              label="Adresse Email"
+              value={email}
+              onChange={handleEmail}
+            /></Grid><Grid item>
+            <TextField
+              required
+              id="password"
+              label="mot de passe"
+              type="password"
+              value={password}
+              onChange={handlePassword}
+            /></Grid><Grid item>
+            <TextField
+              required
+              id="telephone"
+              label="numero de téléphone"
+              value={telephone}
+              onChange={handleTelephone}
+            /></Grid><Grid item>
+            <LocalizationProvider dateAdapter={DateAdapter}>
+              <DesktopDatePicker
+                label="date de naissance"
+                inputFormat="MM/dd/yyyy"
+                value={date}
+                onChange={setDate}
+                renderInput={(params) => <TextField {...params} />}
+              />
+            </LocalizationProvider></Grid>
+            <Grid item>
+            <Button type="submit" sx={{color:"black"}}>soumettre</Button>
+            <br /><br /><br />
+            </Grid>
+          </Grid>
         </Box>
-      </Grid>
-    </Grid>
+      </Box>
+    </Container>
   );
 };

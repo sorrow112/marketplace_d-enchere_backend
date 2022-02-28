@@ -63,7 +63,7 @@ const TopNavBar = () => {
               <Box sx={{ minWidth: 120 }}>
               <FormControl fullWidth>
                 <InputLabel>type</InputLabel>
-                <Select>
+                <Select value="">
                   <MenuItem value={"enchere"}>enchere</MenuItem>
                   <MenuItem value={"enchereInv"}>enchere inverse</MenuItem>
                   <MenuItem value={"vente"}>ventes</MenuItem>

@@ -10,18 +10,18 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { FormControl, Input, InputLabel, MenuItem, Select } from "@mui/material";
 import CreerEnchere from "./CreerEnchere";
 
 export default function CreerArticle() {
   //#region form data state
   const [date, setDate] = React.useState(new Date());
-  const [name, setName] = React.useState();
-  const [state, setState] = React.useState();
-  const [localisation, setLocalisation] = React.useState();
-  const [codeBar, setCodeBar] = React.useState();
-  const [marque, setMarque] = React.useState();
-  const [description, setDescription] = React.useState();
+  const [name, setName] = React.useState("");
+  const [state, setState] = React.useState("");
+  const [localisation, setLocalisation] = React.useState("");
+  const [codeBar, setCodeBar] = React.useState("");
+  const [marque, setMarque] = React.useState("");
+  const [description, setDescription] = React.useState("");
   //#endregion
 
   //#region state manipulation mathods
@@ -44,17 +44,38 @@ export default function CreerArticle() {
     setDescription(event.target.value);
   };
   //#endregion
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   const articleData = {
+  //     name: name,
+  //     state: state,
+  //     fabricationDate: date,
+  //     localisation: localisation,
+  //     codeBar: codeBar,
+  //     marque: marque,
+  //     description: description,
+  //   };
+  //   console.log(articleData);
+  // };
   const handleSubmit = (event) => {
     event.preventDefault();
-    const articleData = {
-        "name": name,
-        "state": state,
-        "localisation": localisation,
-        "codeBar": codeBar,
-        "marque": marque,
-        "description": description
-    }
-    console.log(articleData)
+    const axios = require("axios");
+    axios
+      .post("http://127.0.0.1:8000/api/articles", {
+        name: name,
+        state: state,
+        fabricationDate: date,
+        localisation: localisation,
+        codeBar: codeBar,
+        marque: marque,
+        description: description,
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
   return (
@@ -68,7 +89,7 @@ export default function CreerArticle() {
           alignItems: "center",
         }}
       >
-          <Typography variant="h2">enregistrer un article</Typography>
+        <Typography variant="h2">enregistrer un article</Typography>
         <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
@@ -109,18 +130,19 @@ export default function CreerArticle() {
                 label="code a barre"
                 value={codeBar}
                 onChange={handleCodeBar}
+                placeholder="hello bro"
               />
             </Grid>
             <Grid item xs={12}>
-            <LocalizationProvider dateAdapter={DateAdapter}>
-              <DesktopDatePicker
-                label="date de fabrication"
-                inputFormat="MM/dd/yyyy"
-                value={date}
-                onChange={setDate}
-                renderInput={(params) => <TextField {...params} />}
-              />
-            </LocalizationProvider>
+              <LocalizationProvider dateAdapter={DateAdapter}>
+                <DesktopDatePicker
+                  label="date de fabrication"
+                  inputFormat="MM/dd/yyyy"
+                  value={date}
+                  onChange={setDate}
+                  renderInput={(params) => <TextField {...params} />}
+                />
+              </LocalizationProvider>
             </Grid>
             <Grid item xs={12}>
               <FormControl fullWidth>
@@ -130,6 +152,7 @@ export default function CreerArticle() {
                   id="demo-simple-select"
                   label="etat"
                   onChange={handleState}
+                  value=""
                 >
                   <MenuItem value="nouveau">nouveau</MenuItem>
                   <MenuItem value="ancien">ancien</MenuItem>
@@ -137,22 +160,36 @@ export default function CreerArticle() {
               </FormControl>
             </Grid>
             <Grid item xs={12}>
-            <textarea
-              name="description"
-              id="description"
-              value={description}
-              onChange={handleDescription}
-              className="descriptionField"
-              cols="30"
-              rows="10"
-              placeholder="description"
-            ></textarea>
+              <textarea
+                name="description"
+                id="description"
+                value={description}
+                onChange={handleDescription}
+                className="descriptionField"
+                cols="30"
+                rows="10"
+                placeholder="description"
+              ></textarea>
             </Grid>
             <Grid item xs={12}>
               <FormControlLabel
                 control={<Checkbox value="validation" />}
                 label="vous guarentissez la validité de ces informations"
               />
+            </Grid>
+            {/* handle saving documents here */}
+            <Grid item xs={12}>
+            <label htmlFor="contained-button-file">
+              <Input
+                accept="image/*"
+                id="contained-button-file"
+                multiple
+                type="file"
+              />
+              <Button variant="contained" component="span">
+                Upload
+              </Button>
+            </label>
             </Grid>
           </Grid>
           <Button
@@ -164,7 +201,7 @@ export default function CreerArticle() {
             soumettre
           </Button>
         </Box>
-        <CreerEnchere/>
+        <CreerEnchere />
       </Box>
     </Container>
   );

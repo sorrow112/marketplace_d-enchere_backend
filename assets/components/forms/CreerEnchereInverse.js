@@ -13,12 +13,12 @@ import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 const CreerEnchereInverse = () => {
   //#region form data state
   
-  const [quantity, setQuantity] = React.useState();
-  const [initPrice, setInitPrice] = React.useState();
-  const [immediatePrice, setImmediatePrice] = React.useState();
+  const [quantity, setQuantity] = React.useState("");
+  const [initPrice, setInitPrice] = React.useState("");
+  const [immediatePrice, setImmediatePrice] = React.useState("");
   const [startDate, setStartDate] = React.useState(new Date());
   const [endDate, setEndDate] = React.useState(new Date());
-  const [category, setCategory] = React.useState();
+  const [category, setCategory] = React.useState("");
   //#endregion
 
   //#region state manipulation mathods
@@ -90,6 +90,7 @@ const CreerEnchereInverse = () => {
                 label="quantité"
                 value={quantity}
                 onChange={handleQuantity}
+ 
               />
             </Grid>
             <Grid item xs={12}>
@@ -145,6 +146,7 @@ const CreerEnchereInverse = () => {
                   id="demo-simple-select"
                   onChange={handleCategory}
                   label="category"
+                  value=""
                 >
 
                 {Object.keys(categories).map((key, index) => (
