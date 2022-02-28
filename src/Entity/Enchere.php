@@ -11,6 +11,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use App\Controller\EncheresController;
 
 #[ORM\Entity(repositoryClass: EnchereRepository::class)]
 #[ApiResource(
@@ -22,6 +23,13 @@ use Symfony\Component\Validator\Constraints as Assert;
         'delete',
         'get' => [
             'normalisation_context' => ['groups' => ['read:enchere:collection', 'read:enchere:item']]
+        ],
+        'create'=>[
+            'path' => '/create',
+            'method'=>'post',
+            'controller' => EncheresController::class,
+            'normalization_context' => ['groups' => 'write:enchere'],
+            'read' => false,
         ]
     ]
         ),ApiFilter(
@@ -44,27 +52,27 @@ class Enchere
     #[ORM\Column(type: 'float')]
     #[Groups(['read:enchere:item',"read:enchere:item", 'write:enchere'])]
     #[Assert\Positive]
-    private $init_price;
+    private $initPrice;
 
     #[ORM\Column(type: 'float')]
     #[Groups(['read:enchere:collection',"read:enchere:item", 'write:enchere'])]
     #[Assert\Positive]
-    private $immediate_price;
+    private $immediatePrice;
 
     #[ORM\Column(type: 'float')]
     #[Groups(['read:enchere:collection', 'read:surveille:collection',"read:enchere:item", 'write:enchere'])]
     #[Assert\Positive]
-    private $current_price;
+    private $currentPrice;
 
     #[ORM\Column(type: 'datetime')]
     #[Groups(['read:enchere:collection',"read:enchere:item", 'write:enchere'])]
     #[Assert\GreaterThan('today')]
-    private $start_date;
+    private $startDate;
 
     #[ORM\Column(type: 'datetime')]
     #[Groups(['read:enchere:collection',"read:enchere:item", 'write:enchere'])]
     #[Assert\GreaterThan('today')]
-    private $end_date;
+    private $endDate;
 
     #[ORM\OneToMany(mappedBy: 'enchere', targetEntity: Surveille::class)]
     private $surveilles;
@@ -78,7 +86,7 @@ class Enchere
 
     #[ORM\OneToOne(targetEntity: Article::class, cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['read:enchere:collection', 'read:surveille:collection', "read:enchere:item",'read:fermeture:collection'])]
+    #[Groups(['read:enchere:collection', 'read:surveille:collection', 'write:enchere',"read:enchere:item",'read:fermeture:collection'])]
     private $article;
 
     #[ORM\Column(type: 'datetime')]
@@ -141,60 +149,60 @@ class Enchere
 
     public function getInitPrice(): ?float
     {
-        return $this->init_price;
+        return $this->initPrice;
     }
 
-    public function setInitPrice(float $init_price): self
+    public function setInitPrice(float $initPrice): self
     {
-        $this->init_price = $init_price;
+        $this->initPrice = $initPrice;
 
         return $this;
     }
 
     public function getImmediatePrice(): ?float
     {
-        return $this->immediate_price;
+        return $this->immediatePrice;
     }
 
-    public function setImmediatePrice(float $immediate_price): self
+    public function setImmediatePrice(float $immediatePrice): self
     {
-        $this->immediate_price = $immediate_price;
+        $this->immediatePrice = $immediatePrice;
 
         return $this;
     }
 
     public function getCurrentPrice(): ?float
     {
-        return $this->current_price;
+        return $this->currentPrice;
     }
 
-    public function setCurrentPrice(float $current_price): self
+    public function setCurrentPrice(float $currentPrice): self
     {
-        $this->current_price = $current_price;
+        $this->currentPrice = $currentPrice;
 
         return $this;
     }
 
     public function getStartDate(): ?\DateTimeInterface
     {
-        return $this->start_date;
+        return $this->startDate;
     }
 
-    public function setStartDate(\DateTimeInterface $start_date): self
+    public function setStartDate(\DateTimeInterface $startDate): self
     {
-        $this->start_date = $start_date;
+        $this->startDate = $startDate;
 
         return $this;
     }
 
     public function getEndDate(): ?\DateTimeInterface
     {
-        return $this->end_date;
+        return $this->endDate;
     }
 
-    public function setEndDate(\DateTimeInterface $end_date): self
+    public function setEndDate(\DateTimeInterface $endDate): self
     {
-        $this->end_date = $end_date;
+        $this->endDate = $endDate;
 
         return $this;
     }

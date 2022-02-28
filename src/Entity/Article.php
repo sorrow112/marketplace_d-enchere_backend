@@ -32,12 +32,12 @@ class Article
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(['read:vente:collection', 'read:enchere:collection', 'read:enchereInverse:collection', 'read:surveille:collection', 'read:panier:collection', 'read:fermeture:collection'])]
+    #[Groups(['read:vente:collection','read:enchere:collection', 'read:article:collection', 'read:enchereInverse:collection', 'read:surveille:collection', 'read:panier:collection', 'read:fermeture:collection'])]
     private $id;
    
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['read:vente:collection', 'read:enchere:collection', 'read:enchereInverse:collection', 'read:surveille:collection', 'read:panier:collection'
+    #[Groups(['read:vente:collection', 'read:enchere:collection', 'read:article:collection', 'read:enchereInverse:collection', 'read:surveille:collection', 'read:panier:collection'
     , 'read:fermeture:collection','write:article'])]
     #[Assert\Length(
         min: 3,
@@ -49,22 +49,22 @@ class Article
 
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['read:vente:item', 'read:enchere:item', 'read:enchereInverse:item','write:article'])]
+    #[Groups(['read:vente:item', 'read:enchere:item', 'read:article:collection', 'read:enchereInverse:item','write:article'])]
     #[Assert\Choice(['neuf', 'utilisé'])]
     private $state;
 
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['read:vente:item', 'read:enchere:item', 'read:enchereInverse:item','write:article'])]
+    #[Groups(['read:vente:item', 'read:enchere:item', 'read:article:collection', 'read:enchereInverse:item','write:article'])]
     private $localisation;
 
 
     #[ORM\Column(type: 'datetime')]
-    #[Groups(['read:vente:item', 'read:enchere:item', 'read:enchereInverse:item','write:article'])]
+    #[Groups(['read:vente:item', 'read:enchere:item', 'read:article:collection', 'read:enchereInverse:item','write:article'])]
     private $fabrication_date;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    #[Groups(['read:vente:item', 'read:enchere:item', 'read:enchereInverse:item','write:article'])]
+    #[Groups(['read:vente:item', 'read:enchere:item', 'read:article:collection', 'read:enchereInverse:item','write:article'])]
     #[Assert\Length(
         max: 15,
         maxMessage: 'le nom de marque est trop long',
@@ -72,7 +72,7 @@ class Article
     private $brand;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    #[Groups(['read:vente:item', 'read:enchere:item', 'read:enchereInverse:item','write:article'])]
+    #[Groups(['read:vente:item', 'read:enchere:item', 'read:article:collection', 'read:enchereInverse:item','write:article'])]
     private $codebar;
 
     #[ORM\OneToMany(mappedBy: 'article', targetEntity: Document::class)]
@@ -84,7 +84,7 @@ class Article
     private $vente;
 
     #[ORM\Column(type: 'text', nullable: true)]
-    #[Groups(['read:vente:item', 'read:enchere:item', 'read:enchereInverse:item','write:article'])]
+    #[Groups(['read:vente:item', 'read:enchere:item', 'read:article:collection', 'read:enchereInverse:item','write:article'])]
     private $description;
 
     public function __construct()
