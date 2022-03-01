@@ -15,7 +15,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: EnchereInverseRepository::class)]
 #[ApiResource(
     normalizationContext: ['groups' => ['read:enchereInverse:collection']],
-    denormalizationContext: ['groups' => ['write:enchereInverse']],
     paginationItemsPerPage:12 ,
     itemOperations: [
         'put',
@@ -46,28 +45,28 @@ class EnchereInverse
     #[ORM\Column(type: 'float')]
     #[Groups(['read:enchereInverse:item','write:enchereInverse'])]
     #[Assert\Positive]
-    private $init_price;
+    private $initPrice;
 
     #[ORM\Column(type: 'float')]
     #[Groups(['read:enchereInverse:collection','write:enchereInverse'])]
     #[Assert\Positive]
-    private $immediate_price;
+    private $immediatePrice;
 
     #[ORM\Column(type: 'float')]
     #[Groups(['read:enchereInverse:collection','write:enchereInverse','read:surveille:collection'])]
     #[Assert\Positive]
-    private $current_price;
+    private $currentPrice;
 
     #[ORM\Column(type: 'datetime')]
     #[Groups(['read:enchereInverse:collection', 'write:enchereInverse'])]
     #[Assert\GreaterThan('today')]
-    private $start_date;
+    private $startDate;
 
 
     #[ORM\Column(type: 'datetime')]
     #[Groups(['read:enchereInverse:collection', 'write:enchereInverse'])]
     #[Assert\GreaterThan('today')]
-    private $end_date;
+    private $endDate;
 
     #[ORM\OneToOne(targetEntity: Article::class, cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
@@ -152,60 +151,60 @@ class EnchereInverse
 
     public function getInitPrice(): ?float
     {
-        return $this->init_price;
+        return $this->initPrice;
     }
 
-    public function setInitPrice(float $init_price): self
+    public function setInitPrice(float $initPrice): self
     {
-        $this->init_price = $init_price;
+        $this->initPrice = $initPrice;
 
         return $this;
     }
 
     public function getImmediatePrice(): ?float
     {
-        return $this->immediate_price;
+        return $this->immediatePrice;
     }
 
-    public function setImmediatePrice(float $immediate_price): self
+    public function setImmediatePrice(float $immediatePrice): self
     {
-        $this->immediate_price = $immediate_price;
+        $this->immediatePrice = $immediatePrice;
 
         return $this;
     }
 
     public function getCurrentPrice(): ?float
     {
-        return $this->current_price;
+        return $this->currentPrice;
     }
 
-    public function setCurrentPrice(float $current_price): self
+    public function setCurrentPrice(float $currentPrice): self
     {
-        $this->current_price = $current_price;
+        $this->currentPrice = $currentPrice;
 
         return $this;
     }
 
     public function getStartDate(): ?\DateTime
     {
-        return $this->start_date;
+        return $this->startDate;
     }
 
-    public function setStartDate(\DateTime $start_date): self
+    public function setStartDate(\DateTime $startDate): self
     {
-        $this->start_date = $start_date;
+        $this->startDate = $startDate;
 
         return $this;
     }
 
     public function getEndDate(): ?\DateTime
     {
-        return $this->end_date;
+        return $this->endDate;
     }
 
-    public function setEndDate(\DateTime $end_date): self
+    public function setEndDate(\DateTime $endDate): self
     {
-        $this->end_date = $end_date;
+        $this->endDate = $endDate;
 
         return $this;
     }

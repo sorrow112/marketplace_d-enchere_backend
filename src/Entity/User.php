@@ -14,7 +14,6 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Security\User\JWTUserInterface;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
@@ -33,9 +32,6 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
             'method'=> 'get',
             'controller' => UserDataController::class,
             'read'=>false,
-            // 'openapi_context' => [
-            //     'security' =>[['bearerAuth' => []]]
-            // ]
             ],
         'register'=>[
             'path' => '/register',
@@ -50,11 +46,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface{
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(['read:vente:item', 'read:vente:collection', 'read:transaction:item', 'read:panier:collection', 'read:fermeture:collection','read:user:collection'])]
+    #[Groups(['read:vente:item', 'read:vente:collection'
+    , 'read:transaction:item', 'read:panier:collection',
+     'read:fermeture:collection','read:user:collection',
+     'read:enchere:collection','read:enchereInverse:collection',
+     'write:enchere'])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['write:user', 'read:user:item'])]
+    #[Groups(['write:user', 'read:user:item'
+    ])]
     #[Assert\Regex(
         pattern: "/^[a-z ,.'-]+$/i",
         message: "le nom ne doit pas contenir des characteres speciaux et ça doit etre entre 2 et 5 mots"
@@ -62,7 +63,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface{
     private $name;
 
     #[ORM\Column(type: 'string', length: 20)]
-    #[Groups(['read:vente:collection', 'write:user', 'read:user:collection', 'read:transaction:item', 'read:fermeture:collection'])]
+    #[Groups(['read:vente:collection', 'write:user', 
+    'read:user:collection', 'read:transaction:item', 
+    'read:fermeture:collection', 'read:enchere:collection',
+    'read:enchereInverse:collection', 'write:enchere'])]
     #[Assert\Length(
         min: 5,
         max: 15,
@@ -76,7 +80,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface{
     private $displayName;
 
     #[ORM\Column(type: 'string', length: 180, unique: true)]
-    #[Groups(['write:user', 'read:user:collection'])]
+    #[Groups(['write:user', 'read:user:collection', 'write:enchere'])]
     #[Assert\Email(
         message: "l'email :{{ value }} n'est pas un email valide.",
     )]

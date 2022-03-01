@@ -16,7 +16,6 @@ use App\Controller\EncheresController;
 #[ORM\Entity(repositoryClass: EnchereRepository::class)]
 #[ApiResource(
     normalizationContext: ['groups' => ['read:enchere:collection']],
-    denormalizationContext: ['groups' => ['write:enchere']],
     paginationItemsPerPage:12 ,
     itemOperations: [
         'put',
@@ -45,32 +44,32 @@ class Enchere
     private $id;
 
     #[ORM\Column(type: 'integer')]
-    #[Groups(['read:enchere:collection', "read:enchere:item", 'write:enchere'])]
+    #[Groups(['read:enchere:collection', "read:enchere:item"])]
     #[Assert\Positive]
     private $quantity;
 
     #[ORM\Column(type: 'float')]
-    #[Groups(['read:enchere:item',"read:enchere:item", 'write:enchere'])]
+    #[Groups(['read:enchere:item',"read:enchere:item"])]
     #[Assert\Positive]
     private $initPrice;
 
     #[ORM\Column(type: 'float')]
-    #[Groups(['read:enchere:collection',"read:enchere:item", 'write:enchere'])]
+    #[Groups(['read:enchere:collection',"read:enchere:item"])]
     #[Assert\Positive]
     private $immediatePrice;
 
     #[ORM\Column(type: 'float')]
-    #[Groups(['read:enchere:collection', 'read:surveille:collection',"read:enchere:item", 'write:enchere'])]
+    #[Groups(['read:enchere:collection', 'read:surveille:collection',"read:enchere:item"])]
     #[Assert\Positive]
     private $currentPrice;
 
     #[ORM\Column(type: 'datetime')]
-    #[Groups(['read:enchere:collection',"read:enchere:item", 'write:enchere'])]
+    #[Groups(['read:enchere:collection',"read:enchere:item"])]
     #[Assert\GreaterThan('today')]
     private $startDate;
 
     #[ORM\Column(type: 'datetime')]
-    #[Groups(['read:enchere:collection',"read:enchere:item", 'write:enchere'])]
+    #[Groups(['read:enchere:collection',"read:enchere:item"])]
     #[Assert\GreaterThan('today')]
     private $endDate;
 
@@ -86,7 +85,7 @@ class Enchere
 
     #[ORM\OneToOne(targetEntity: Article::class, cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['read:enchere:collection', 'read:surveille:collection', 'write:enchere',"read:enchere:item",'read:fermeture:collection'])]
+    #[Groups(['read:enchere:collection', 'read:surveille:collection',"read:enchere:item",'read:fermeture:collection'])]
     private $article;
 
     #[ORM\Column(type: 'datetime')]
@@ -97,12 +96,12 @@ class Enchere
 
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups("read:enchere:item",'read:enchere:collection', 'write:enchere')]
+    #[Groups("read:enchere:item",'read:enchere:collection')]
     private $user;
 
     #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'encheres')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['read:enchere:item','read:enchere:collection','write:enchere'])]
+    #[Groups(['read:enchere:item','read:enchere:collection'])]
     private $category;
 
  

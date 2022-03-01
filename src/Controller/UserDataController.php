@@ -15,7 +15,6 @@ class UserDataController extends AbstractController
     {
         
         $user = $this->security->getUser();
-
         return $user;
     }
 }
