@@ -54,7 +54,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface{
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['write:user', 'read:user:item'
+    #[Groups(['write:user', 'read:user:collection'
     ])]
     #[Assert\Regex(
         pattern: "/^[a-z ,.'-]+$/i",
@@ -93,7 +93,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface{
     private $password;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['write:user', 'read:user:item'])]
+    #[Groups(['write:user','read:user:collection'])]
     #[Assert\Length(
         min: 8,
         max: 8,
@@ -159,6 +159,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface{
     private $GotPayed;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
+    #[Groups(['write:user','read:user:collection'])]
     private $birthDate;
 
 

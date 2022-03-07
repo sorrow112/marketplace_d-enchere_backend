@@ -8,9 +8,10 @@ use Doctrine\Common\Collections\Collection;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\EnchereInverseRepository;
 use Doctrine\Common\Collections\ArrayCollection;
-use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 #[ORM\Entity(repositoryClass: EnchereInverseRepository::class)]
 #[ApiResource(
@@ -28,7 +29,7 @@ use Symfony\Component\Validator\Constraints as Assert;
     SearchFilter::class ,
     properties: ['user' => 'exact', 'category' => 'exact','id' => 'exact']
 )]
-
+#[ApiFilter(OrderFilter::class, properties: ['endDate'=>'ASC'])]
 class EnchereInverse
 {
     #[ORM\Id]
