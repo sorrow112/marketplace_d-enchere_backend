@@ -12,7 +12,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ApiResource(
 denormalizationContext: ['groups' => ['write:article']],
 itemOperations: [
-    'put'
+    'put',
+    'get'
 ]
 )]
 class Adresse
@@ -41,10 +42,10 @@ class Adresse
     
     #[ORM\Column(type: 'string', length: 255)]
     #[Groups(['read:user:item', 'write:article'])]
-    #[Assert\Regex(
-        pattern: "^\d{5}(?:[-\s]\d{4})?$",
-        message: "zipcode invalide"
-    )]
+    // #[Assert\Regex(
+    //     pattern: "^\d{5}(?:[-\s]\d{4})?$",
+    //     message: "zipcode invalide"
+    // )]
     
     private $zipcode;
 
