@@ -46,7 +46,7 @@ class Enchere
     private $id;
 
     #[ORM\Column(type: 'integer')]
-    #[Groups(['read:enchere:collection', "read:enchere:item"])]
+    #[Groups(['read:surveille:collection','read:enchere:collection', "read:enchere:item"])]
     #[Assert\Positive]
     private $quantity;
 
@@ -71,7 +71,7 @@ class Enchere
     private $startDate;
 
     #[ORM\Column(type: 'datetime')]
-    #[Groups(['read:enchere:collection',"read:enchere:item"])]
+    #[Groups(['read:surveille:collection','read:enchere:collection',"read:enchere:item"])]
     #[Assert\GreaterThan('today')]
     private $endDate;
 
@@ -98,7 +98,7 @@ class Enchere
 
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups('read:enchere:collection')]
+    #[Groups('read:surveille:collection','read:enchere:collection')]
     private $user;
 
     #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'encheres')]

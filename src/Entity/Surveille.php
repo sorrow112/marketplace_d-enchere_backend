@@ -27,14 +27,14 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
     ]
         ),ApiFilter(
     SearchFilter::class ,
-    properties: ['user_id' => 'exact']
+    properties: ['user' => 'exact']
 )]
 class Surveille
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(['read:surveille:collection'])]
+    #[Groups(['read:surveille:collection','read:user:collection'])]
     private $id;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'surveilles')]
@@ -43,11 +43,11 @@ class Surveille
     private $user;
 
     #[ORM\ManyToOne(targetEntity: Enchere::class, inversedBy: 'surveilles')]
-    #[Groups(['write:surveille', 'read:surveille:collection'])]
+    #[Groups(['write:surveille', 'read:surveille:collection', 'read:user:collection'])]
     private $enchere;
 
     #[ORM\ManyToOne(targetEntity: EnchereInverse::class, inversedBy: 'surveilles')]
-    #[Groups(['write:surveille', 'read:surveille:collection'])]
+    #[Groups(['write:surveille', 'read:surveille:collection', 'read:user:collection'])]
     private $enchereInverse;
 
     public function getId(): ?int

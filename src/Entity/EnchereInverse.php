@@ -66,7 +66,7 @@ class EnchereInverse
 
 
     #[ORM\Column(type: 'datetime')]
-    #[Groups(['read:enchereInverse:collection', 'write:enchereInverse'])]
+    #[Groups(['read:surveille:collection','read:enchereInverse:collection', 'write:enchereInverse'])]
     #[Assert\GreaterThan('today')]
     private $endDate;
 
@@ -92,7 +92,7 @@ class EnchereInverse
 
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups('read:enchereInverse:collection')]
+    #[Groups('read:surveille:collection','read:enchereInverse:collection')]
     private $user;
 
     #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'enchereInverses')]

@@ -64,7 +64,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface{
     private $name;
 
     #[ORM\Column(type: 'string', length: 20)]
-    #[Groups(['read:vente:collection', 'write:user', 
+    #[Groups(['read:surveille:collection','read:vente:collection', 'write:user', 
     'read:user:collection', 'read:transaction:item', 
     'read:fermeture:collection', 'read:enchere:collection',
     'read:enchereInverse:collection', 'write:enchere'])]
@@ -140,6 +140,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface{
     private $adresse;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Surveille::class, orphanRemoval: true)]
+    #[Groups(['read:user:collection'])]
     private $surveilles;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Reduction::class, orphanRemoval: true)]
