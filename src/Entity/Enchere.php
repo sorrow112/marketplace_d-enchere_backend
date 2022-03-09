@@ -96,7 +96,7 @@ class Enchere
 
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups("read:enchere:item",'read:enchere:collection')]
+    #[Groups('read:enchere:collection')]
     private $user;
 
     #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'encheres')]

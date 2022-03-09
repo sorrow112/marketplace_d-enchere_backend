@@ -54,12 +54,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface{
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['write:user', 'read:user:item'
+    #[Groups(['write:user', 'read:user:collection'
     ])]
     #[Assert\Regex(
         pattern: "/^[a-z ,.'-]+$/i",
         message: "le nom ne doit pas contenir des characteres speciaux et ça doit etre entre 2 et 5 mots"
     )]
+    #[Assert\NotNull]
     private $name;
 
     #[ORM\Column(type: 'string', length: 20)]
@@ -74,9 +75,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface{
         maxMessage: "le nom d'utlisateur saisit est très long",
     )]
     #[Assert\Regex(
-        pattern: "/^(?=[a-zA-Z0-9._]{8,20}$)(?!.*[_.]{2})[^_.].*[^_.]$/",
+        pattern: "/^[A-Za-z][A-Za-z0-9]{5,31}$/",
         message: "le nom d'utilisateur ne doit pas contenir des characteres speciaux"
     )]
+    #[Assert\NotNull]
     private $displayName;
 
     #[ORM\Column(type: 'string', length: 180, unique: true)]
@@ -84,16 +86,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface{
     #[Assert\Email(
         message: "l'email :{{ value }} n'est pas un email valide.",
     )]
+    #[Assert\NotNull]
     private $email;
 
    
     #[ORM\Column(type: 'string', length: 255)]
     #[Groups(['write:user'])]
     #[SerializedName("password")]
+    #[Assert\NotNull]
     private $password;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['write:user', 'read:user:item'])]
+    #[Groups(['write:user', 'read:user:collection'])]
     #[Assert\Length(
         min: 8,
         max: 8,
@@ -104,6 +108,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface{
         pattern: "/^[0-9]{8}$/",
         message: "votre numero de telephone doit contenir uniquement des chiffres"
     )]
+    #[Assert\NotNull]
     private $telephone;
 
     #[ORM\Column(type: 'string', length: 255)]
@@ -159,6 +164,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface{
     private $GotPayed;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
+    #[Groups(['write:user', 'read:user:collection'])]
     private $birthDate;
 
 
