@@ -18,12 +18,22 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 #[ApiResource(
     normalizationContext: ['groups' => ['read:enchereInverse:collection']],
     paginationItemsPerPage:12 ,
+    collectionOperations:[
+        'getFour'=>[
+            'path' => '/encheres_inverses/getFour',
+            'method' => 'GET',
+            "pagination_items_per_page" => 4,
+        ],
+        "get",
+        "post"
+    ],
     itemOperations: [
         'put',
         'delete',
         'get' => [
             'normalisation_context' => ['groups' => ['read:enchereInverse:collection', 'read:enchereInverse:item']]
-        ]
+        ],
+        
     ]
         ),
         ApiFilter(

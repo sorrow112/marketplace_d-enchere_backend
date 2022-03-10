@@ -18,6 +18,15 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 #[ApiResource(
     normalizationContext: ['groups' => ['read:enchere:collection']],
     paginationItemsPerPage:12 ,
+    collectionOperations:[
+        'getFour'=>[
+            'path' => '/encheres/getFour',
+            'method' => 'GET',
+            "pagination_items_per_page" => 4,
+        ],
+        "get",
+        "post"
+    ],
     itemOperations: [
         'put',
         'delete',
@@ -28,9 +37,9 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
             'path' => '/create',
             'method'=>'post',
             'controller' => EncheresController::class,
-            'normalization_context' => ['groups' => 'write:enchere'],
+            'denormalization_context' => ['groups' => 'write:enchere'],
             'read' => false,
-        ]
+        ],
     ]
         ),ApiFilter(
     SearchFilter::class ,
