@@ -23,6 +23,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
             'path' => '/enchere_inverses/getFour',
             'method' => 'GET',
             "pagination_items_per_page" => 4,
+            'normalisation_context' => ['groups' => ['read:enchereInverse:collection']]
         ],
         "get",
         "post"
@@ -102,7 +103,7 @@ class EnchereInverse
 
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups('read:surveille:collection','read:enchereInverse:collection')]
+    #[Groups(['read:surveille:collection','read:enchereInverse:collection'])]
     private $user;
 
     #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'enchereInverses')]

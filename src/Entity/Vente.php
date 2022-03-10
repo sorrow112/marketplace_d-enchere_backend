@@ -55,7 +55,7 @@ class Vente
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'ventes')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups('read:vente:collection', 'write:vente')]
+    #[Groups(['read:vente:collection', 'write:vente'])]
     private $user;
 
 

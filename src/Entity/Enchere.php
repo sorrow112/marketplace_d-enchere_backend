@@ -23,6 +23,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
             'path' => '/encheres/getFour',
             'method' => 'GET',
             "pagination_items_per_page" => 4,
+            'normalisation_context' => ['groups' => ['read:enchere:collection']]
         ],
         "get",
         "post"
@@ -107,7 +108,7 @@ class Enchere
 
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups('read:surveille:collection','read:enchere:collection')]
+    #[Groups(['read:surveille:collection','read:enchere:collection'])]
     private $user;
 
     #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'encheres')]
