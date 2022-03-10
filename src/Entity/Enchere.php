@@ -44,7 +44,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
     ]
         ),ApiFilter(
     SearchFilter::class ,
-    properties: ['category' => 'exact', 'user' => 'exact', 'name'=>'partial','id' => 'exact']
+    properties: ['category' => 'exact', 'user' => 'exact', 'id' => 'exact']
 )]
 #[ApiFilter(OrderFilter::class, properties: ['endDate'=>'ASC'])]
 class Enchere

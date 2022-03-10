@@ -137,7 +137,6 @@ class Vente
     {
         return $this->createdAt;
     }
-
     public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
@@ -168,4 +167,5 @@ class Vente
 
         return $this;
     }
+
 }
