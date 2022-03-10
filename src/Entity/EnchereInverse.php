@@ -20,7 +20,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
     paginationItemsPerPage:12 ,
     collectionOperations:[
         'getFour'=>[
-            'path' => '/encheres_inverses/getFour',
+            'path' => '/enchere_inverses/getFour',
             'method' => 'GET',
             "pagination_items_per_page" => 4,
         ],
