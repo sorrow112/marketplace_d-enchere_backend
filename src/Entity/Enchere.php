@@ -26,7 +26,13 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
             'normalisation_context' => ['groups' => ['read:enchere:collection']]
         ],
         "get",
-        "post"
+        "post",
+        'search'=>[
+            'path' => '/encheres/search',
+            'method' => 'GET',
+            "pagination_items_per_page" => 5,
+            'normalisation_context' => ['groups' => ['read:enchere:search']]
+        ],
     ],
     itemOperations: [
         'put',
@@ -44,7 +50,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
     ]
         ),ApiFilter(
     SearchFilter::class ,
-    properties: ['category' => 'exact', 'user' => 'exact', 'id' => 'exact']
+    properties: ['category' => 'exact', 'user' => 'exact', 'id' => 'exact', 'article.name' => 'partial']
 )]
 #[ApiFilter(OrderFilter::class, properties: ['endDate'=>'ASC'])]
 class Enchere
@@ -56,7 +62,7 @@ class Enchere
     private $id;
 
     #[ORM\Column(type: 'integer')]
-    #[Groups(['read:surveille:collection','read:enchere:collection', "read:enchere:item"])]
+    #[Groups(['read:surveille:collection','read:enchere:collection', "read:enchere:item",'read:enchere:search'])]
     #[Assert\Positive]
     private $quantity;
 
@@ -71,7 +77,7 @@ class Enchere
     private $immediatePrice;
 
     #[ORM\Column(type: 'float')]
-    #[Groups(['read:enchere:collection', 'read:surveille:collection',"read:enchere:item"])]
+    #[Groups(['read:enchere:collection', 'read:surveille:collection',"read:enchere:item", 'read:enchere:search'])]
     #[Assert\Positive]
     private $currentPrice;
 
@@ -97,7 +103,7 @@ class Enchere
 
     #[ORM\OneToOne(targetEntity: Article::class, cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['read:enchere:collection', 'read:surveille:collection',"read:enchere:item",'read:fermeture:collection'])]
+    #[Groups(['read:enchere:collection', 'read:surveille:collection',"read:enchere:item",'read:fermeture:collection', 'read:enchereInverse:search'])]
     private $article;
 
     #[ORM\Column(type: 'datetime')]

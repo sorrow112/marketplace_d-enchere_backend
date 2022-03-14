@@ -25,6 +25,12 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
             "pagination_items_per_page" => 4,
             'normalisation_context' => ['groups' => ['read:enchereInverse:collection']]
         ],
+        'search'=>[
+            'path' => '/enchere_inverses/search',
+            'method' => 'GET',
+            "pagination_items_per_page" => 5,
+            'normalisation_context' => ['groups' => ['read:enchereInverse:search']]
+        ],
         "get",
         "post"
     ],
@@ -32,14 +38,14 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
         'put',
         'delete',
         'get' => [
-            'normalisation_context' => ['groups' => ['read:enchereInverse:collection', 'read:enchereInverse:item']]
+            'normalisation_context' => ['groups' => ['read:enchereInverse:collection', 'read:enchereInverse:item',]]
         ],
         
     ]
         ),
         ApiFilter(
     SearchFilter::class ,
-    properties: ['user' => 'exact', 'category' => 'exact','id' => 'exact']
+    properties: ['user' => 'exact', 'category' => 'exact','id' => 'exact', 'article.name' => 'partial']
 )]
 #[ApiFilter(OrderFilter::class, properties: ['endDate'=>'ASC'])]
 class EnchereInverse
@@ -51,7 +57,7 @@ class EnchereInverse
     private $id;
 
     #[ORM\Column(type: 'integer')]
-    #[Groups(['read:enchereInverse:collection','write:enchereInverse'])]
+    #[Groups(['read:enchereInverse:collection','write:enchereInverse','read:enchereInverse:search'])]
     #[Assert\Positive]
     private $quantity;
 
@@ -66,7 +72,7 @@ class EnchereInverse
     private $immediatePrice;
 
     #[ORM\Column(type: 'float')]
-    #[Groups(['read:enchereInverse:collection','write:enchereInverse','read:surveille:collection'])]
+    #[Groups(['read:enchereInverse:collection','write:enchereInverse','read:surveille:collection','read:enchereInverse:search'])]
     #[Assert\Positive]
     private $currentPrice;
 
@@ -83,7 +89,7 @@ class EnchereInverse
 
     #[ORM\OneToOne(targetEntity: Article::class, cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['read:enchereInverse:collection', 'read:surveille:collection', 'read:fermeture:collection'])]
+    #[Groups(['read:enchereInverse:collection', 'read:surveille:collection', 'read:fermeture:collection', 'read:enchereInverse:search'])]
     private $article;
 
     #[ORM\OneToMany(mappedBy: 'enchereInverse', targetEntity: Surveille::class)]
