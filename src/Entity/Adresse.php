@@ -26,12 +26,14 @@ class Adresse
     
     
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['read:user:collection', 'write:article'])]
+    #[Groups(['read:user:collection', 'write:article', 
+    'read:enchere:collection', 'read:enchereInverse:collection'])]
     private $pays;
 
     
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['read:user:collection', 'write:article'])]
+    #[Groups(['read:user:collection', 'write:article',
+     'read:enchere:collection', 'read:enchereInverse:collection'])]
     private $ville;
 
     

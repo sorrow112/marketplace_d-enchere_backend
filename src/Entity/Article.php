@@ -85,6 +85,7 @@ class Article
     private $codebar;
 
     #[ORM\OneToMany(mappedBy: 'article', targetEntity: Document::class)]
+    #[ORM\JoinColumn(nullable: true)]
     #[Groups(['read:vente:item', 'read:enchere:item', 'read:enchereInverse:item', 'write:article'])]
     private $documents;
 

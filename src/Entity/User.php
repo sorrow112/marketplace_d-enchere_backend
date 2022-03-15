@@ -136,7 +136,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface{
     private $demandesRecus;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Adresse::class)]
-    #[Groups(['read:user:collection'])]
+    #[Groups(['read:user:collection', 'read:enchere:collection', 'read:enchereInverse:collection'])]
     private $adresse;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Surveille::class, orphanRemoval: true)]
