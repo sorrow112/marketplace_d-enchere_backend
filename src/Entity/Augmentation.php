@@ -3,14 +3,19 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiFilter;
 use App\Repository\AugmentationRepository;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+
 
 #[ORM\Entity(repositoryClass: AugmentationRepository::class)]
 #[ApiResource(
     normalizationContext: ['groups' => ['read:augmentation:collection']],
+    paginationItemsPerPage:5 ,
     denormalizationContext: ['groups' => ['write:augmentation']],
     itemOperations: [
         'get' => [
@@ -18,6 +23,8 @@ use Symfony\Component\Validator\Constraints as Assert;
         ]
     ]
 )]
+#[ApiFilter(OrderFilter::class, properties: ['date' => 'DESC'])]
+#[ApiFilter(SearchFilter::class, properties: ['enchere' => 'exact', 'user' => 'exact'])]
 class Augmentation
 {
     #[ORM\Id]
