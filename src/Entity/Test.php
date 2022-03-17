@@ -26,6 +26,9 @@ class Test
     #[ORM\Column(type: 'string', length: 255)]
     private $name;
 
+    #[ORM\Column(type: 'binary')]
+    private $file;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -39,6 +42,18 @@ class Test
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    public function setFile($file): self
+    {
+        $this->file = $file;
 
         return $this;
     }

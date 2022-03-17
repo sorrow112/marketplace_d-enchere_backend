@@ -71,6 +71,7 @@ class Document
     public ?string $contentUrl = null;
 
     #[ORM\Column(nullable: true)] 
+    #[Groups(['media_object:read'])]
     public ?string $filePath = null;
 
     #[ORM\ManyToOne(targetEntity: Article::class, inversedBy: 'documents')]
@@ -79,8 +80,11 @@ class Document
     /**
      * @Vich\UploadableField(mapping="media_object", fileNameProperty="filePath")
      */
-    #[Assert\NotNull(groups: ['media_object_create'])]
+    #[Assert\NotNull(groups: ['media_object_create', 'media_object:read'])]
+    #[ORM\Column(type: 'binary')]
     public ?File $file = null;
+    
+    
     public function getId(): ?int
     {
         return $this->id;
@@ -95,6 +99,18 @@ class Document
     public function setArticle(?Article $article): self
     {
         $this->article = $article;
+
+        return $this;
+    }
+    
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    public function setFile($file): self
+    {
+        $this->file = $file;
 
         return $this;
     }
