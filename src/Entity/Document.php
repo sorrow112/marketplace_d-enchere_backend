@@ -41,6 +41,9 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
                                         'type' => 'string',
                                         'format' => 'binary',
                                     ],
+                                    'article' => [
+                                        'type' => "string",
+                                    ]
                                 ],
                             ],
                         ],
