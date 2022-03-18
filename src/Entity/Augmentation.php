@@ -17,6 +17,10 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
     normalizationContext: ['groups' => ['read:augmentation:collection']],
     paginationItemsPerPage:5 ,
     denormalizationContext: ['groups' => ['write:augmentation']],
+    collectionOperations: [
+        "get",
+        "post" => ["security" => "is_granted('ROLE_USER')"],
+    ],
     itemOperations: [
         'get' => [
             'normalisation_context' => ['groups' => ['read:augmentation:collection']]

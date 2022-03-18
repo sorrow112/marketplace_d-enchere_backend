@@ -16,9 +16,13 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ApiResource(
     normalizationContext: ['groups' => ['read:article:collection']],
     denormalizationContext: ['groups' => ['write:article']],
+    collectionOperations: [
+        "get",
+        "post" => ["security" => "is_granted('ROLE_USER')"],
+    ],
     itemOperations: [
-        'put',
-        'delete',
+        'put'=> ["security" => "is_granted('ROLE_ADMIN')"],
+        'delete'=> ["security" => "is_granted('ROLE_ADMIN')"],
         'get' => [
             'normalisation_context' => ['groups' => ['read:article:collection', 'read:article:item']]
         ]
@@ -62,7 +66,7 @@ class Article
     #[Assert\Choice(['neuf', 'utilisé'])]
     private $state;
 
-
+// TODO: add a user property for the put and delete !
     #[ORM\Column(type: 'string', length: 255)]
     #[Groups(['read:vente:item', 'read:enchere:item', 'read:article:collection', 'read:enchereInverse:item', 'write:article'])]
     private $localisation;

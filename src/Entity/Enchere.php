@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+
+use App\Controller\PutPriceController;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\EnchereRepository;
 use App\Controller\EncheresController;
@@ -27,7 +29,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
             'normalisation_context' => ['groups' => ['read:enchere:collection']]
         ],
         "get",
-        "post",
+        "post"=> ["security" => "is_granted('ROLE_USER')"],
         'search'=>[
             'path' => '/encheres/search',
             'method' => 'GET',
@@ -36,17 +38,16 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
         ],
     ],
     itemOperations: [
-        'put',
-        'delete',
+        "put_price"=>[
+            "path" => "/encheresBid/{id}",
+            "method" => "PUT",
+            "denormalisation_context" => ['groups'=>["bid"]],
+            "security" => "is_granted('ROLE_USER')"
+        ],
+        'put' => ["security" => "is_granted('ROLE_ADMIN') or object.user == user"],
+        'delete'=> ["security" => "is_granted('ROLE_ADMIN') or object.user == user"],
         'get' => [
             'normalisation_context' => ['groups' => ['read:enchere:collection', 'read:enchere:item']]
-        ],
-        'create'=>[
-            'path' => '/create',
-            'method'=>'post',
-            'controller' => EncheresController::class,
-            'denormalization_context' => ['groups' => 'write:enchere'],
-            'read' => false,
         ],
     ]
         ),ApiFilter(
@@ -79,18 +80,19 @@ class Enchere
     private $immediatePrice;
 
     #[ORM\Column(type: 'float')]
-    #[Groups(['read:enchere:collection', 'read:surveille:collection',"read:enchere:item", 'read:enchere:search'])]
+    #[Groups(['read:enchere:collection',"bid", 'read:surveille:collection',"read:enchere:item", 'read:enchere:search'])]
     #[Assert\Positive]
     private $currentPrice;
 
     #[ORM\Column(type: 'datetime')]
     #[Groups(['read:enchere:collection',"read:enchere:item"])]
-    #[Assert\GreaterThan('today')]
+    // #[Assert\GreaterThan('today')]
     private $startDate;
 
     #[ORM\Column(type: 'datetime')]
     #[Groups(['read:surveille:collection','read:enchere:collection',"read:enchere:item"])]
-    #[Assert\GreaterThan('today')]
+    // TODO: line commented for testing purposes
+    // #[Assert\GreaterThan('today')]
     private $endDate;
 
     #[ORM\OneToMany(mappedBy: 'enchere', targetEntity: Surveille::class)]
