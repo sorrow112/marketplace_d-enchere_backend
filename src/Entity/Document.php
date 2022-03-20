@@ -27,6 +27,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
     collectionOperations: [
         'get',
         'post' => [
+            "security" => "is_granted('ROLE_USER')",
             'controller' => CreateMediaObjectAction::class,
             'deserialize' => false,
             'validation_groups' => ['Default', 'document:write'],

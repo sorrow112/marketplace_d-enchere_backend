@@ -13,7 +13,10 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ApiResource(
     normalizationContext: ['groups' => ['read:category:collection']],
     denormalizationContext: ['groups' => ['write:category']],
-
+    collectionOperations: [
+        "get",
+        "post" => ["security" => "is_granted('ROLE_ADMIN')"],
+    ],
     itemOperations: [
         'delete'=> ["security" => "is_granted('ROLE_ADMIN')"],
         'put'=> ["security" => "is_granted('ROLE_ADMIN')"],

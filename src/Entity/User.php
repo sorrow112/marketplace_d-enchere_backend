@@ -22,9 +22,11 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
     denormalizationContext: ['groups' => ['write:user']],
     paginationItemsPerPage:12 ,
     itemOperations: [
-        'put',
+        'put' => ["security" => "is_granted('ROLE_ADMIN') or object == user"],
         'get' => [
-            'normalisation_context' => ['groups' => ['read:user:collection', 'read:user:item']]
+            'normalisation_context' => ['groups' => ['read:user:collection', 'read:user:item']],
+            
+            
         ],
         'getData' =>[
             'paginationItemsPerPage'=> false,

@@ -12,11 +12,15 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ApiResource(
     normalizationContext: ['groups' => ['read:fermeture:collection']],
     denormalizationContext: ['groups' => ['write:fermeture']],
+    collectionOperations:[
+        "get",
+        "post"=> ["security" => "is_granted('ROLE_ADMIN') or object.enchere.user == user or object.enchereInverse.user == user"],
+    ],
     itemOperations: [
-        'delete',
         'get' => [
             'normalisation_context' => ['groups' => ['read:fermeture:collection']]
-        ]
+        ],
+        "put"=> ["security" => "is_granted('ROLE_ADMIN') or object.enchere.user == user or object.enchereInverse.user == user"]
     ]
 )]
 class Fermeture

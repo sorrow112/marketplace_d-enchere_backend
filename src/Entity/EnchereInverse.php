@@ -32,11 +32,17 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
             'normalisation_context' => ['groups' => ['read:enchereInverse:search']]
         ],
         "get",
-        "post"
+        "post"=> ["security" => "is_granted('ROLE_USER')"],
     ],
     itemOperations: [
-        'put',
-        'delete',
+        "put_price"=>[
+            "path" => "/encheresInverseBid/{id}",
+            "method" => "PUT",
+            "denormalisation_context" => ['groups'=>["bid"]],
+            "security" => "is_granted('ROLE_USER')"
+        ],
+        'put' => ["security" => "is_granted('ROLE_ADMIN') or object.user == user"],
+        'delete'=> ["security" => "is_granted('ROLE_ADMIN') or object.user == user"],
         'get' => [
             'normalisation_context' => ['groups' => ['read:enchereInverse:collection', 'read:enchereInverse:item',]]
         ],
@@ -72,7 +78,7 @@ class EnchereInverse
     private $immediatePrice;
 
     #[ORM\Column(type: 'float')]
-    #[Groups(['read:enchereInverse:collection','write:enchereInverse','read:surveille:collection','read:enchereInverse:search'])]
+    #[Groups(['read:enchereInverse:collection','bid','write:enchereInverse','read:surveille:collection','read:enchereInverse:search'])]
     #[Assert\Positive]
     private $currentPrice;
 
