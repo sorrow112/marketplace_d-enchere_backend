@@ -42,7 +42,6 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
         "put_price"=>[
             "path" => "/encheresBid/{id}",
             'method' => "PUT",
-            "access_control" => "is_granted('EDIT', previous_object)",
             "denormalisation_context" => ['groups'=>["bid"]],
         ],
         'put' => ["access_control" => "is_granted('EDIT', previous_object)",],
