@@ -12,9 +12,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ApiResource(
 denormalizationContext: ['groups' => ['write:article']],
 itemOperations: [
-    'put'=> ["security" => "is_granted('ROLE_ADMIN') or object.user == user"],
+    'put'=> ["access_control" => "is_granted('EDIT', previous_object)",],
     'get',
-    'delete'=> ["security" => "is_granted('ROLE_ADMIN') or object.user == user"],
+    'delete'=> ["access_control" => "is_granted('EDIT', previous_object)",],
 ]
 )]
 class Adresse

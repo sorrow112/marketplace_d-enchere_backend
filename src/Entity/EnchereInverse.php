@@ -41,8 +41,8 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
             "denormalisation_context" => ['groups'=>["bid"]],
             "security" => "is_granted('ROLE_USER')"
         ],
-        'put' => ["security" => "is_granted('ROLE_ADMIN') or object.user == user"],
-        'delete'=> ["security" => "is_granted('ROLE_ADMIN') or object.user == user"],
+        'put' => ["access_control" => "is_granted('EDIT', previous_object)",],
+        'delete'=> ["access_control" => "is_granted('EDIT', previous_object)",],
         'get' => [
             'normalisation_context' => ['groups' => ['read:enchereInverse:collection', 'read:enchereInverse:item',]]
         ],

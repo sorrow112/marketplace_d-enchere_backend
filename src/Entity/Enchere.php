@@ -3,10 +3,11 @@
 namespace App\Entity;
 
 
-use App\Controller\PutPriceController;
+use App\Controller\EditEnchere;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\EnchereRepository;
 use App\Controller\EncheresController;
+use App\Controller\PutPriceController;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use Doctrine\Common\Collections\Collection;
 use ApiPlatform\Core\Annotation\ApiResource;
@@ -40,12 +41,12 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
     itemOperations: [
         "put_price"=>[
             "path" => "/encheresBid/{id}",
-            "method" => "PUT",
+            'method' => "PUT",
+            "access_control" => "is_granted('EDIT', previous_object)",
             "denormalisation_context" => ['groups'=>["bid"]],
-            "security" => "is_granted('ROLE_USER')"
         ],
-        'put' => ["security" => "is_granted('ROLE_ADMIN') or object.user == user"],
-        'delete'=> ["security" => "is_granted('ROLE_ADMIN') or object.user == user"],
+        'put' => ["access_control" => "is_granted('EDIT', previous_object)",],
+        'delete'=> ["access_control" => "is_granted('EDIT', previous_object)",],
         'get' => [
             'normalisation_context' => ['groups' => ['read:enchere:collection', 'read:enchere:item']]
         ],

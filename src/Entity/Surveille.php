@@ -16,11 +16,11 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
     denormalizationContext: ['groups' => ['write:surveille']],
     collectionOperations:[
         'get',
-        'post'=>["security" => "object.user == user"],
+        'post'=>["access_control" => "is_granted('EDIT', previous_object)",],
 
     ],
     itemOperations: [
-        'delete'=>["security" => "is_granted('ROLE_ADMIN') or object.user == user"],
+        'delete'=>["access_control" => "is_granted('EDIT', previous_object)",],
         'get' => [
             'normalisation_context' => ['groups' => ['read:surveille:collection']]
         ]
