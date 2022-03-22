@@ -20,6 +20,11 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
     collectionOperations: [
         "get",
         "post" => ["security" => "is_granted('ROLE_USER')"],
+        "getHighest"=>[
+            "path" => "/augmentationHighest",
+            'method' => "GET",
+            "pagination_items_per_page" => 1,
+        ],
     ],
     itemOperations: [
         'get' => [

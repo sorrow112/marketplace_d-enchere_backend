@@ -4,20 +4,35 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ReductionRepository;
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 #[ORM\Entity(repositoryClass: ReductionRepository::class)]
 #[ApiResource(
     normalizationContext: ['groups' => ['read:reduction:collection']],
+    paginationItemsPerPage:5 ,
     denormalizationContext: ['groups' => ['write:reduction']],
+    collectionOperations: [
+        "get",
+        "post" => ["security" => "is_granted('ROLE_USER')"],
+        "getLowest"=>[
+            "path" => "/reductionLowest",
+            'method' => "GET",
+            "pagination_items_per_page" => 1,
+        ],
+    ],
     itemOperations: [
         'get' => [
             'normalisation_context' => ['groups' => ['read:reduction:collection']]
         ]
     ]
 )]
+#[ApiFilter(OrderFilter::class, properties: ['date' => 'DESC'])]
+#[ApiFilter(SearchFilter::class, properties: ['enchere' => 'exact', 'user' => 'exact'])]
 class Reduction
 {
     #[ORM\Id]

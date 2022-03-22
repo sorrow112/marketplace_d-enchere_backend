@@ -81,8 +81,6 @@ class Document
     /**
      * @Vich\UploadableField(mapping="media_object", fileNameProperty="filePath")
      */
-    #[Assert\NotNull(groups: ['media_object_create', 'media_object:read'])]
-    #[ORM\Column(type: 'binary')]
     public ?File $file = null;
     
     

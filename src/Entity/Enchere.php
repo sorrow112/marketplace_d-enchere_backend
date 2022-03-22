@@ -70,7 +70,7 @@ class Enchere
     private $quantity;
 
     #[ORM\Column(type: 'float')]
-    #[Groups(['read:enchere:item',"read:enchere:item"])]
+    #[Groups(['read:enchere:item',"read:enchere:collection"])]
     #[Assert\Positive]
     private $initPrice;
 
@@ -79,10 +79,10 @@ class Enchere
     #[Assert\Positive]
     private $immediatePrice;
 
-    #[ORM\Column(type: 'float')]
-    #[Groups(['read:enchere:collection',"bid", 'read:surveille:collection',"read:enchere:item", 'read:enchere:search'])]
-    #[Assert\Positive]
-    private $currentPrice;
+    // #[ORM\Column(type: 'float')]
+    // #[Groups(['read:enchere:collection',"bid", 'read:surveille:collection',"read:enchere:item", 'read:enchere:search'])]
+    // #[Assert\Positive]
+    // private $currentPrice;
 
     #[ORM\Column(type: 'datetime')]
     #[Groups(['read:enchere:collection',"read:enchere:item"])]
@@ -192,17 +192,17 @@ class Enchere
         return $this;
     }
 
-    public function getCurrentPrice(): ?float
-    {
-        return $this->currentPrice;
-    }
+    // public function getCurrentPrice(): ?float
+    // {
+    //     return $this->currentPrice;
+    // }
 
-    public function setCurrentPrice(float $currentPrice): self
-    {
-        $this->currentPrice = $currentPrice;
+    // public function setCurrentPrice(float $currentPrice): self
+    // {
+    //     $this->currentPrice = $currentPrice;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     public function getStartDate(): ?\DateTimeInterface
     {
