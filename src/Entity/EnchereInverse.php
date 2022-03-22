@@ -34,6 +34,8 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
         "get",
         "post"=> ["security" => "is_granted('ROLE_USER')"],
     ],
+
+    
     itemOperations: [
         "put_price"=>[
             "path" => "/encheresInverseBid/{id}",
