@@ -6,14 +6,14 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class EnchereVoter extends Voter
+class EnchereMembersRoomVoter extends Voter
 {
     protected function supports(string $attribute, $subject): bool
     {
         // replace with your own logic
         // https://symfony.com/doc/current/security/voters.html
         return in_array($attribute, ['EDIT', 'REMOVE'])
-            && $subject instanceof \App\Entity\Enchere;
+            && $subject instanceof \App\Entity\EnchereMembersRoom;
     }
 
     protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token): bool
@@ -29,19 +29,31 @@ class EnchereVoter extends Voter
             case 'EDIT':
                 // logic to determine if the user can EDIT
                 // return true or false
-                
-                if ($subject->getUser() === $user) {
-                    return true;
+                try {
+                    if ($subject->getEnchere()->getUser() === $user) {
+                        return true;
+                    }
+                } catch (\Exception $e) {
+                    if ($subject->getEnchereInverse()->getUser() === $user) {
+                        return true;
+                    }
                 }
-                elseif ($user->getRoles()== "ROLE_ADMIN") {
+                
+                if ($user->getRoles()== "ROLE_ADMIN") {
                     return true;
                 }
                 break;
             case 'REMOVE':
-                if ($subject->getUser() === $user) {
-                    return true;
+                try {
+                    if ($subject->getEnchere()->getUser() === $user) {
+                        return true;
+                    }
+                } catch (\Exception $e) {
+                    if ($subject->getEnchereInverse()->getUser() === $user) {
+                        return true;
+                    }
                 }
-                elseif ($user->getRoles()== "ROLE_ADMIN") {
+                if ($user->getRoles()== "ROLE_ADMIN") {
                     return true;
                 }
                 break;

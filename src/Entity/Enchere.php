@@ -45,7 +45,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
             "denormalisation_context" => ['groups'=>["bid"]],
         ],
         'put' => ["access_control" => "is_granted('EDIT', previous_object)",],
-        'delete'=> ["access_control" => "is_granted('EDIT', previous_object)",],
+        'delete'=> ["access_control" => "is_granted('REMOVE', previous_object)",],
         'get' => [
             'normalisation_context' => ['groups' => ['read:enchere:collection', 'read:enchere:item']]
         ],
@@ -125,6 +125,9 @@ class Enchere
     #[ORM\JoinColumn(nullable: false)]
     #[Groups(['read:enchere:item','read:enchere:collection'])]
     private $category;
+
+    #[ORM\OneToOne(mappedBy: 'enchere', targetEntity: EnchereMembersRoom::class, cascade: ['persist', 'remove'])]
+    private $membersRoom;
 
  
 
@@ -344,6 +347,23 @@ class Enchere
     public function setCategory(?Category $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    public function getMembersRoom(): ?EnchereMembersRoom
+    {
+        return $this->membersRoom;
+    }
+
+    public function setMembersRoom(EnchereMembersRoom $membersRoom): self
+    {
+        // set the owning side of the relation if necessary
+        if ($membersRoom->getEnchere() !== $this) {
+            $membersRoom->setEnchere($this);
+        }
+
+        $this->membersRoom = $membersRoom;
 
         return $this;
     }

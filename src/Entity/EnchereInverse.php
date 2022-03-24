@@ -125,6 +125,9 @@ class EnchereInverse
     #[Groups(['read:enchereInverse:item','write:enchereInverse'])]
     private $category;
 
+    #[ORM\OneToOne(mappedBy: 'EnchereInverse', targetEntity: EnchereMembersRoom::class, cascade: ['persist', 'remove'])]
+    private $MembersRoom;
+
 
     public function __construct()
     {
@@ -340,6 +343,28 @@ class EnchereInverse
     public function setCategory(?Category $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    public function getMembersRoom(): ?EnchereMembersRoom
+    {
+        return $this->MembersRoom;
+    }
+
+    public function setMembersRoom(?EnchereMembersRoom $MembersRoom): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($MembersRoom === null && $this->MembersRoom !== null) {
+            $this->MembersRoom->setEnchereInverse(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($MembersRoom !== null && $MembersRoom->getEnchereInverse() !== $this) {
+            $MembersRoom->setEnchereInverse($this);
+        }
+
+        $this->MembersRoom = $MembersRoom;
 
         return $this;
     }
